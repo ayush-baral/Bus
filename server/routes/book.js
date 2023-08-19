@@ -1,13 +1,18 @@
 import express from "express";
-// import { createError } from "../utils/error.js";
 import {
-  bookBus
+  bookBus,
+  getBook,
+  getallBook,
 } from "../controllers/bookingcontroller.js";
+import { verifyAdmin, verifyUser } from "../utils/verifytoken.js";
+
 const app = express();
 const router = express.Router();
 
-console.log("buasd")
+console.log("buasd");
 //create
 router.post("/", bookBus);
+router.get("/:id", verifyUser, getBook);
+router.get("/", verifyAdmin, getallBook);
 
 export default router;

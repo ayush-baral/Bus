@@ -1,7 +1,8 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import StoreIcon from "@mui/icons-material/Store";
+import BookOnlineIcon from "@mui/icons-material/BookOnline";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -45,8 +46,14 @@ const Sidebar = () => {
           </Link>
           <Link to="/bus" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <DirectionsBusIcon className="icon" />
               <span>Bus</span>
+            </li>
+          </Link>
+          <Link to="/book" style={{ textDecoration: "none" }}>
+            <li>
+              <BookOnlineIcon className="icon" />
+              <span>Bookings</span>
             </li>
           </Link>
           <li>

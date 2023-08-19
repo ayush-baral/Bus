@@ -10,7 +10,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
+// import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
@@ -20,18 +20,22 @@ const Header = ({ type }) => {
   // const onchange = (date) => {
   //   setDate(date);
   // };
-  const [buses, setBuses] = useState([])
+  const [buses, setBuses] = useState([]);
 
   React.useEffect(() => {
-    console.log(sourceCity)
+    console.log(sourceCity);
     const fetchBus = async () => {
-      const buses = await axios.get(`http://localhost:8800/api/bus/buses?startCity=${sourceCity || ""}&destinationCity=${destinationCity || ""}`);
+      const buses = await axios.get(
+        `http://localhost:8800/api/bus/buses?startCity=${
+          sourceCity || ""
+        }&destinationCity=${destinationCity || ""}`
+      );
       console.log(buses);
-      setBuses(buses.data)
-    }
+      setBuses(buses.data);
+    };
     // setBuses(buses)
-      fetchBus()
-  }, [sourceCity, destinationCity])
+    fetchBus();
+  }, [sourceCity, destinationCity]);
   const navigate = useNavigate();
   const handleSearch = () => {
     if (sourceCity && destinationCity) {
@@ -46,7 +50,7 @@ const Header = ({ type }) => {
         {type !== "list" && (
           <div>
             <h1>Book your journey now with the bus platform Hamro Bus</h1>
-        
+
             <div className="headerListItem">
               <FontAwesomeIcon icon={faBus} />
             </div>
@@ -96,16 +100,17 @@ const Header = ({ type }) => {
             </div>
           </div>
         )}
-            <div>
-              {buses.length > 0 && 
-                buses.map(bus => {
-                  return <div key={bus.id}>
-                    <p>{bus.name}</p>
-                    {/* <p>{bus.busNumber}</p> */}
-                  </div>
-                })
-              }
-            </div>
+        <div>
+          {buses.length > 0 &&
+            buses.map((bus) => {
+              return (
+                <div key={bus.id}>
+                  <p>{bus.name}</p>
+                  {/* <p>{bus.busNumber}</p> */}
+                </div>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

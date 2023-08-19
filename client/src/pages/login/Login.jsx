@@ -30,9 +30,9 @@ const Login = (props) => {
       const res = await axios.post("auth/login", credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
       setLoginStatus("success"); // Set login status to success
-      if(busId){
-        navigate(`/bus/${busId}?selectedSeats=${selectedSeats}`)
-      }else{
+      if (busId) {
+        navigate(`/bus/${busId}?selectedSeats=${selectedSeats}`);
+      } else {
         navigate("/");
       }
     } catch (err) {

@@ -30,7 +30,7 @@ const NewBus = () => {
           );
 
           const { url } = uploadRes.data;
-          console.log("Uploaded file URL:", url); // Add this console log
+
           return url;
         })
       );
@@ -40,14 +40,13 @@ const NewBus = () => {
         photos: list,
       };
 
-      console.log("New Bus:", newBus);
-      const response = await axios.post("/bus", newBus);
-      console.log("Upload Response:", response.data);
+      // console.log("New Bus:", newBus);
+      await axios.post("/bus", newBus);
+      // console.log("Upload Response:", response.data);
 
-      navigate("/bus"); // Navigate to the bus page after successful upload
+      navigate("/bus");
     } catch (error) {
       console.error("Error:", error);
-      // Handle the error (e.g., display an error message)
     }
   };
 

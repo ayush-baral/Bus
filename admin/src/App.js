@@ -9,8 +9,9 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/Authcontext";
-import { busColumns, userColumns } from "./datatablesource";
+import { bookingColumns, busColumns, userColumns } from "./datatablesource";
 import NewBus from "./pages/newBus/NewBus";
+import Book from "./pages/book/Book";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -77,6 +78,24 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <NewBus />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="book">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <List columns={bookingColumns} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="new"
+                element={
+                  <ProtectedRoute>
+                    <Book title="Add New Booking" />
                   </ProtectedRoute>
                 }
               />

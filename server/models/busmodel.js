@@ -46,17 +46,17 @@ const BusSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  time:{
-    type:String,
-    required:true,
+  time: {
+    type: String,
+    required: true,
   },
-  boardingPoints:{
-    type:[String],
-    required:true,
+  boardingPoints: {
+    type: [String],
+    required: true,
   },
-  date:{
-    type:Date,
-  }
+  date: {
+    type: Date,
+  },
 });
 
 export default mongoose.model("Bus", BusSchema);

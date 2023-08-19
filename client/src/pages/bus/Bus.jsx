@@ -11,7 +11,7 @@ const BusSeatSelection = () => {
   const user = useContext(AuthContext);
 
   const handleSeatClick = (seatNumber) => {
-    console.log(seatNumber)
+    console.log(seatNumber);
     if (selectedSeats.includes(seatNumber)) {
       setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
     } else {
@@ -20,22 +20,22 @@ const BusSeatSelection = () => {
   };
   const queryParams = new URLSearchParams(window.location.search);
   const seatsFromQuery = queryParams.get("selectedSeats");
-  console.log(seatsFromQuery)
+  console.log(seatsFromQuery);
   React.useEffect(() => {
-    if(seatsFromQuery && seatsFromQuery.length){
-      setSelectedSeats(seatsFromQuery.split(","))
+    if (seatsFromQuery && seatsFromQuery.length) {
+      setSelectedSeats(seatsFromQuery.split(","));
     }
-  }, [])
+  }, []);
   const handleClearSelection = () => {
     setSelectedSeats([]);
   };
   const handleClick = () => {
-    if(!selectedSeats.length){
-      return alert("Select seats to continue booking.")
+    if (!selectedSeats.length) {
+      return alert("Select seats to continue booking.");
     }
-    console.log(user)
+    console.log(user);
     if (user?.user) {
-      navigate("/book", { state: {...bus, selectedSeats} });
+      navigate("/book", { state: { ...bus, selectedSeats } });
     } else {
       navigate(`/login?busId=${bus._id}&selectedSeats=${selectedSeats}`);
     }
@@ -76,19 +76,19 @@ const BusSeatSelection = () => {
   const [bus, setBus] = React.useState(null);
   const [showBoardingPoint, setShowBoradingPoint] = React.useState(false);
 
-  const {id} = useParams();
+  const { id } = useParams();
 
   React.useEffect(() => {
     const getBus = async () => {
       const bus = await axios.get(`http://localhost:8800/api/bus/find/${id}`);
-      setBus(bus.data)
+      setBus(bus.data);
+    };
+    if (id) {
+      getBus();
     }
-    if(id){
-      getBus()
-    }
-  }, [id])
+  }, [id]);
 
-  console.log(bus)
+  console.log(bus);
   return (
     <div className="contactus">
       <div className="bus-seat-container">
@@ -110,18 +110,25 @@ const BusSeatSelection = () => {
             <button className="clearButton" onClick={handleClearSelection}>
               Clear Selection
             </button>
-            <button className="BoardingButton" onClick={() => {setShowBoradingPoint(true)}}>
+            <button
+              className="BoardingButton"
+              onClick={() => {
+                setShowBoradingPoint(true);
+              }}
+            >
               Boarding Points
             </button>
           </div>
         </div>
-        {showBoardingPoint &&  <div>
-          {
-            bus?.boardingPoints.length ? bus.boardingPoints.map(point => <p>{point}</p>): <p>No boarding points</p>
-          }
-        </div>
-        } 
-       
+        {showBoardingPoint && (
+          <div>
+            {bus?.boardingPoints.length ? (
+              bus.boardingPoints.map((point) => <p>{point}</p>)
+            ) : (
+              <p>No boarding points</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

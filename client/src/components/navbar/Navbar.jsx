@@ -1,14 +1,16 @@
 import React, { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./navbar.css";
 import { AuthContext } from "../../context/Authcontext";
-
+import MenuIcon from "@mui/icons-material/Menu";
 function NavBar() {
   const { user, dispatch } = useContext(AuthContext);
   const [click, setClick] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => setClick(!click);
-
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (confirmLogout) {
@@ -52,7 +54,7 @@ function NavBar() {
             {user ? (
               <>
                 <li className="nav-item">
-                  <span className="nav-links">Welcome, {user.username}</span>
+                  <span className="nav-links"> {user.username}</span>
                 </li>
                 <li className="nav-item">
                   <button className="nav-logout" onClick={handleLogout}>
@@ -101,6 +103,19 @@ function NavBar() {
           <div className="nav-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
+          {user && (
+            <div className="menu">
+              <button onClick={toggleDropdown}>
+                <MenuIcon />
+              </button>
+              {isOpen && (
+                <div className="dropdown-content">
+                  <Link to="/profile">Profile</Link>
+                  <Link to="/booking">View Booking</Link>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </nav>
     </>

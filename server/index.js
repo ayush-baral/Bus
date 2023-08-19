@@ -6,6 +6,7 @@ import Bus from "./routes/bus.js";
 import Book from "./routes/book.js";
 import cookieParser from "cookie-parser";
 import usersRoute from "./routes/users.js";
+import commonroute from "./routes/commonroute.js";
 import cors from "cors";
 
 dotenv.config();
@@ -26,12 +27,13 @@ mongoose.connection.on("disconnected", () => {
 //middlewares
 app.use(cookieParser());
 app.use(express.json());
-console.log("asdasd")
-app.use(cors("*"))
+console.log("asdasd");
+app.use(cors("*"));
 app.use("/api/auth", authRoute);
 app.use("/api/bus", Bus);
 app.use("/api/book", Book);
 app.use("/api/users", usersRoute);
+app.use("/api/commonroute", commonroute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

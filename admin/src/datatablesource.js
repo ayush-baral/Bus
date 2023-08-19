@@ -98,3 +98,43 @@ export const busColumns = [
     width: 100,
   },
 ];
+export const bookingColumns = [
+  { field: "userId", headerName: "UserId", width: 250 },
+  { field: "busId", headerName: "BusId", width: 250 },
+  {
+    field: "nameOfPassenger",
+    headerName: "Name of Passenger",
+    width: 150,
+  },
+  {
+    field: "email",
+    headerName: "Email",
+    width: 100,
+  },
+  {
+    field: "phonenumber",
+    headerName: "Phone Number",
+    width: 230,
+  },
+  {
+    field: "seats",
+    headerName: "Seats booked",
+    width: 100,
+  },
+  {
+    field: "price",
+    headerName: "Total Price",
+    width: 100,
+  },
+  {
+    field: "time",
+    headerName: "Time",
+    width: 100,
+  },
+
+  {
+    field: "date",
+    headerName: "Date",
+    width: 100,
+  },
+];
