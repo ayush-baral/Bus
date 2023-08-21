@@ -12,7 +12,7 @@ const router = express.Router();
 console.log("buasd");
 //create
 router.post("/", bookBus);
+router.get("/", getallBook);
 router.get("/:id", verifyUser, getBook);
-router.get("/", verifyAdmin, getallBook);
 
 export default router;

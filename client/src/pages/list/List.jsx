@@ -62,7 +62,12 @@ const List = () => {
             ) : (
               <>
                 {data.length > 0 ? (
-                  data.map((item) => <Searchitem item={item} key={item._id} />)
+                  data.map((item) => (
+                    <Searchitem
+                      item={{ ...item, departureDate: date }}
+                      key={item._id}
+                    />
+                  ))
                 ) : (
                   <p>No buses found</p>
                 )}

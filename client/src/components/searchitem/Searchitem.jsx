@@ -24,7 +24,11 @@ const Searchitem = ({ item }) => {
       <div>
         <h1>{item.pricePerSeat}</h1>
       </div>
-      <Link to={`/bus/${item._id}`}>
+      <Link
+        to={`/bus/${item._id}?date=${new Date(
+          item.departureDate
+        ).toISOString()}`}
+      >
         <button className="siCheckButton">Reserve a Seat</button>
       </Link>
     </div>

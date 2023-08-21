@@ -1,4 +1,5 @@
 import Book from "../models/bookingmodel.js";
+import moment from "moment-timezone";
 
 //create new booking
 export const bookBus = async (req, res, next) => {
@@ -16,7 +17,6 @@ export const bookBus = async (req, res, next) => {
 //get single book
 export const getBook = async (req, res, next) => {
   try {
-    console.log("asdasdass");
     const book = await Book.findById(req.params.id);
     res.status(200).json(book);
   } catch (err) {
@@ -25,11 +25,29 @@ export const getBook = async (req, res, next) => {
 };
 
 //get all book
-export const getallBook = async (req, res) => {
+export const getallBook = async (req, res, next) => {
   try {
-    console.log("asdasdass");
-    const books = await Book.find();
-    res.status(200).json(books);
+    const { bookingDate, userId } = req.query;
+    let startOfDay;
+    let endOfDay;
+    if (bookingDate) {
+      startOfDay = moment(bookingDate).startOf("day");
+      endOfDay = moment(bookingDate).endOf("day");
+    }
+    let filter = {};
+    if (startOfDay && endOfDay) {
+      filter = {
+        date: {
+          $gte: new Date(startOfDay).toISOString(),
+          $lte: new Date(endOfDay).toISOString(),
+        },
+      };
+    }
+    if (userId) {
+      filter.userId = userId;
+    }
+    const books = await Book.find(filter);
+    return res.status(200).json(books);
   } catch (err) {
     next(err);
   }

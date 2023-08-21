@@ -22,6 +22,7 @@ const Login = (props) => {
   const queryParams = new URLSearchParams(window.location.search);
   const busId = queryParams.get("busId");
   const selectedSeats = queryParams.get("selectedSeats");
+  const date = queryParams.get("date");
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ const Login = (props) => {
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
       setLoginStatus("success"); // Set login status to success
       if (busId) {
-        navigate(`/bus/${busId}?selectedSeats=${selectedSeats}`);
+        navigate(`/bus/${busId}?selectedSeats=${selectedSeats}&date=${date}`);
       } else {
         navigate("/");
       }

@@ -10,11 +10,15 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 // import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
-  const [sourceCity, setSourceCity] = useState("");
+  const [sourceCity, setSourceCity] = useState([]);
   const [destinationCity, setDestinationCity] = useState("");
   const [date, setDate] = useState(new Date());
   // const onchange = (date) => {
@@ -44,6 +48,7 @@ const Header = ({ type }) => {
       alert("Please enter both source and destination cities.");
     }
   };
+
   return (
     <div className="header">
       <div className="headerList">
@@ -61,12 +66,23 @@ const Header = ({ type }) => {
                   headerIcon
                   className="headerIcon"
                 />
-                <input
+                <Form.Group>
+                  <Typeahead
+                    id="basic-typeahead-single"
+                    labelKey="name"
+                    onChange={setSourceCity}
+                    options={["Kathmandu", "Pokhara"]}
+                    placeholder="Choose a source city..."
+                    selected={sourceCity}
+                  />
+                </Form.Group>
+
+                {/* <input
                   type="text"
                   placeholder="Source City"
                   className="headerSearchInput"
                   onChange={(e) => setSourceCity(e.target.value)}
-                />
+                /> */}
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faLocationDot} className="headerIcon" />

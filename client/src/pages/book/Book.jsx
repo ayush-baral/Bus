@@ -5,10 +5,11 @@ import { AuthContext } from "../../context/Authcontext";
 import "./book.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import * as moment from "moment-timezone";
 
 const Book = () => {
   const { user } = React.useContext(AuthContext);
-  console.log(user);
   const [bookingDetails, setBookingDetails] = React.useState({
     name: "",
     email: "",
@@ -39,10 +40,11 @@ const Book = () => {
       phonenumber: bookingDetails.phone,
       seats: busDetails?.selectedSeats,
       price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
+      date: busDetails?.departureDate,
+      time: busDetails?.time,
     });
-    console.log(response);
   };
-
+  console.log(bookingDetails);
   const getBook = async () => {
     const response = await axios.post(
       "http://localhost:8800/api/book/getBook",
@@ -71,7 +73,21 @@ const Book = () => {
             </div>
             <div className="PassengerItems">
               <label>Boarding Points</label>
-              <input type="select" value={bookingDetails.boardingPoint} />
+              {/* <input type="select" value={bookingDetails.boardingPoint} /> */}
+              <Form.Select
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setBookingDetails({
+                    ...bookingDetails,
+                    boardingPoint: e.target.value,
+                  });
+                }}
+              >
+                {busDetails?.boardingPoints.length > 0 &&
+                  busDetails?.boardingPoints.map((bd) => (
+                    <option value={bd}>{bd}</option>
+                  ))}
+              </Form.Select>
             </div>
             <button onClick={(e) => bookBus(e)}>Proceed to Confirmation</button>
           </div>
@@ -79,6 +95,10 @@ const Book = () => {
             <div className="traveldetails">
               <h1 className="bookTitle">Travel Details</h1>
               <div className="travelItems">
+                <label>
+                  Departure Date :{" "}
+                  {moment(busDetails?.departureDate).format("YYYY/MM/DD")}
+                </label>
                 <label>
                   Route : {busDetails?.startCity} -{" "}
                   {busDetails?.destinationCity}

@@ -4,6 +4,7 @@ import "./bus.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/Authcontext";
 import axios from "axios";
+import * as moment from "moment-timezone";
 
 const BusSeatSelection = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -11,7 +12,6 @@ const BusSeatSelection = () => {
   const user = useContext(AuthContext);
 
   const handleSeatClick = (seatNumber) => {
-    console.log(seatNumber);
     if (selectedSeats.includes(seatNumber)) {
       setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
     } else {
@@ -20,7 +20,7 @@ const BusSeatSelection = () => {
   };
   const queryParams = new URLSearchParams(window.location.search);
   const seatsFromQuery = queryParams.get("selectedSeats");
-  console.log(seatsFromQuery);
+  const departureDate = queryParams.get("date");
   React.useEffect(() => {
     if (seatsFromQuery && seatsFromQuery.length) {
       setSelectedSeats(seatsFromQuery.split(","));
@@ -33,11 +33,14 @@ const BusSeatSelection = () => {
     if (!selectedSeats.length) {
       return alert("Select seats to continue booking.");
     }
-    console.log(user);
     if (user?.user) {
-      navigate("/book", { state: { ...bus, selectedSeats } });
+      navigate("/book", {
+        state: { ...bus, selectedSeats, departureDate: departureDate },
+      });
     } else {
-      navigate(`/login?busId=${bus._id}&selectedSeats=${selectedSeats}`);
+      navigate(
+        `/login?busId=${bus._id}&selectedSeats=${selectedSeats}&date=${departureDate}`
+      );
     }
   };
   const calculateTotalAmount = () => {
@@ -52,11 +55,11 @@ const BusSeatSelection = () => {
       for (let seatNumber = 1; seatNumber <= 2; seatNumber++) {
         const seatId = `${row}-${seatNumber}`;
         const isSelected = selectedSeats.includes(seatId);
-
+        const isBooked = bookedSeats.includes(seatId);
         rowSeats.push(
           <div
             key={seatId}
-            className={`seat ${isSelected ? "selected" : ""}`}
+            className={`seat ${isSelected || isBooked ? "selected" : ""}`}
             onClick={() => handleSeatClick(seatId)}
           >
             {/* No content */}
@@ -88,7 +91,32 @@ const BusSeatSelection = () => {
     }
   }, [id]);
 
-  console.log(bus);
+  const [bookings, setBookings] = useState([]);
+  const [bookedSeats, setBookedSeats] = useState([]);
+  React.useEffect(() => {
+    const getBookings = async () => {
+      const dDate = moment(departureDate).format("YYYY/MM/DD");
+      if (dDate) {
+        const bookings = await axios.get(
+          `http://localhost:8800/api/book?bookingDate=${dDate}`
+        );
+        setBookings(bookings.data);
+      }
+    };
+    getBookings();
+  }, [departureDate]);
+
+  React.useEffect(() => {
+    // if (bookings.length) {
+    console.log(bookings);
+    const bookedSeats = bookings?.reduce((acc, curr) => {
+      acc = [...curr.seats, ...acc];
+      return acc;
+    }, []);
+    setBookedSeats(bookedSeats);
+    console.log(bookedSeats);
+    // }
+  }, [bookings]);
   return (
     <div className="contactus">
       <div className="bus-seat-container">
