@@ -7,13 +7,14 @@ import {
   deleteBus,
   getBus,
   getBusesFromTo,
+  getCities,
   getallBus,
   updateBus,
 } from "../controllers/buscontroller.js";
 const app = express();
 const router = express.Router();
 
-console.log("buasd")
+console.log("buasd");
 //create
 router.post("/", verifyAdmin, createBus);
 
@@ -27,6 +28,7 @@ router.get("/find/:id", getBus);
 //getall
 router.get("/", getallBus);
 router.get("/buses", getBusesFromTo);
+router.get("/cities", getCities);
 // router.get("/", getallBus);
 // const failed = true;
 

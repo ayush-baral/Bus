@@ -1,3 +1,4 @@
+import * as moment from "moment-timezone";
 import Bus from "../models/busmodel.js";
 
 export const createBus = async (req, res, next) => {
@@ -57,9 +58,9 @@ export const getallBus = async (req, res, next) => {
 
 export const getBusesFromTo = async (req, res, next) => {
   console.log("asdas");
-  const { startCity, destinationCity } = req.query;
+  const { startCity, destinationCity, travelDate } = req.query;
   const filter = {};
-  console.log(startCity, destinationCity);
+  console.log(startCity, destinationCity, travelDate);
   if (!startCity && !destinationCity) {
     return res.status(200).json([]);
   }
@@ -76,6 +77,13 @@ export const getBusesFromTo = async (req, res, next) => {
       $options: "i",
     };
   }
+
+  if (travelDate) {
+    filter["unavailableDates"] = {
+      $nin: [travelDate],
+    };
+  }
+
   try {
     const buses = await Bus.find(filter);
     return res.status(200).json(buses);
@@ -88,5 +96,20 @@ export const getBusSeats = async (req, res, next) => {
     const Bus = await Bus.findById(req.params.id);
   } catch (error) {
     next(error);
+  }
+};
+
+export const getCities = async (req, res, next) => {
+  try {
+    const buses = await Bus.find();
+    const startcities = buses.map((bus) => bus.startCity?.toLowerCase());
+    const destinations = buses.map((bus) => bus.destinationCity?.toLowerCase());
+
+    return res.status(200).json({
+      startcities: [...new Set(startcities)],
+      destinations: [...new Set(destinations)],
+    });
+  } catch (err) {
+    next(err);
   }
 };

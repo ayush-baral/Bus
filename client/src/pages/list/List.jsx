@@ -8,6 +8,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Searchitem from "../../components/searchitem/Searchitem";
 import useFetch from "../../hooks/useFetch";
+import * as moment from "moment-timezone";
 
 const List = () => {
   const location = useLocation();
@@ -15,12 +16,19 @@ const List = () => {
   const [destinationCity, setDestinationCity] = useState(
     location.state?.destinationCity || ""
   );
-  const [date, setDate] = useState(location.state?.date || new Date());
+  const [date, setDate] = useState(
+    moment(location.state?.date || new Date()).format("DD/MM/YYYY") ||
+      moment(new Date()).format("DD/MM/YYYY")
+  );
   const [openDate, setOpenDate] = useState(false);
 
   const { data, loading, error, reFetch } = useFetch(
-    `/bus/buses?startCity=${startCity}&destinationCity=${destinationCity}`
+    `/bus/buses?startCity=${startCity}&destinationCity=${destinationCity}&travelDate=${
+      date || ""
+    }`
   );
+
+  console.log(date);
   const handleClick = () => {
     reFetch();
   };
@@ -43,10 +51,9 @@ const List = () => {
             </div>
             <div className="lsItem">
               <label>Date</label>
-              <span onClick={() => setOpenDate(!openDate)}>{`${format(
-                date,
-                "MM/dd/yyyy"
-              )}`}</span>
+              <span onClick={() => setOpenDate(!openDate)}>{`${moment(
+                date
+              ).format("DD/MM/YYYY")}`}</span>
               {openDate && (
                 <Calendar
                   onChange={(date) => setDate(date)}

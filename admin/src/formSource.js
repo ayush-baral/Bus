@@ -103,6 +103,12 @@ export const busInputs = [
     type: "date",
     placeholder: "MM/DD/YYYY",
   },
+  {
+    id: "unavailable date",
+    label: "Unavailable Date",
+    type: "date",
+    placeholder: "DD/MM/YYYY",
+  },
 ];
 
 export const bookInputs = [

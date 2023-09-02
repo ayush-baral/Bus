@@ -97,6 +97,11 @@ export const busColumns = [
     headerName: "Date",
     width: 100,
   },
+  {
+    field: "unavailble date",
+    headerName: "unavailableDate",
+    width: 100,
+  },
 ];
 export const bookingColumns = [
   { field: "userId", headerName: "UserId", width: 250 },

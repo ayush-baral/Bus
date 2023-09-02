@@ -14,6 +14,7 @@ import Form from "react-bootstrap/Form";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { startCase } from "lodash";
 // import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 const Header = ({ type }) => {
@@ -21,10 +22,20 @@ const Header = ({ type }) => {
   const [sourceCity, setSourceCity] = useState([]);
   const [destinationCity, setDestinationCity] = useState("");
   const [date, setDate] = useState(new Date());
-  // const onchange = (date) => {
-  //   setDate(date);
-  // };
+  const [destinations, setDestinations] = useState([]);
+  const [startCities, setStartCities] = useState([]);
+
   const [buses, setBuses] = useState([]);
+
+  React.useEffect(() => {
+    const getStartAndDestinations = async () => {
+      const { data } = await axios.get(`http://localhost:8800/api/bus/cities`);
+      console.log(data);
+      setDestinations(data.destinations);
+      setStartCities(data.startcities);
+    };
+    getStartAndDestinations();
+  }, []);
 
   React.useEffect(() => {
     console.log(sourceCity);
@@ -71,8 +82,8 @@ const Header = ({ type }) => {
                     id="basic-typeahead-single"
                     labelKey="name"
                     onChange={setSourceCity}
-                    options={["Kathmandu", "Pokhara"]}
-                    placeholder="Choose a source city..."
+                    options={startCities.map((s) => startCase(s)) || []}
+                    placeholder="Source city..."
                     selected={sourceCity}
                   />
                 </Form.Group>
@@ -86,12 +97,22 @@ const Header = ({ type }) => {
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faLocationDot} className="headerIcon" />
-                <input
+                {/* <input
                   type="text"
                   placeholder="Destination City"
                   className="headerSearchInput"
                   onChange={(e) => setDestinationCity(e.target.value)}
-                />
+                /> */}
+                <Form.Group>
+                  <Typeahead
+                    id="basic-typeahead-single"
+                    labelKey="name"
+                    onChange={setDestinationCity}
+                    options={destinations.map((d) => startCase(d)) || []}
+                    placeholder="Destination City"
+                    selected={destinationCity}
+                  />
+                </Form.Group>
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />

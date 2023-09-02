@@ -57,6 +57,11 @@ const BusSchema = new mongoose.Schema({
   date: {
     type: Date,
   },
+  unavailableDates: {
+    type: [String],
+    required: false,
+    default: [],
+  },
 });
 
 export default mongoose.model("Bus", BusSchema);
