@@ -12,7 +12,7 @@ const Searchitem = ({ item }) => {
         <h1>{item.busType}</h1>
       </div>
       <div>
-        {console.log(item)}
+        {/* {console.log(item)} */}
         <h1>{item.time}</h1>
       </div>
       <div className="sDeparture">
@@ -27,7 +27,9 @@ const Searchitem = ({ item }) => {
       <Link
         to={`/bus/${item._id}?date=${new Date(
           item.departureDate
-        ).toISOString()}`}
+        )
+        .toISOString()
+      }`}
       >
         <button className="siCheckButton">Reserve a Seat</button>
       </Link>
