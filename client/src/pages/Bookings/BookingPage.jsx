@@ -23,7 +23,8 @@ export default function BookingPage() {
       <div style={{ marginTop: "100px" }}>
         {bookings?.length > 0 &&
           bookings.map((booking) => {
-            return <div>{booking.seats}</div>;
+            return <div>{booking.
+              nameOfPassenger}</div>;
           })}
       </div>
     </div>

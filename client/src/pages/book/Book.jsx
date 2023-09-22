@@ -7,8 +7,12 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import * as moment from "moment-timezone";
+// import { PDFDownloadLink, Page, Text, Document, StyleSheet } from "@react-pdf/renderer";
 
 const Book = () => {
+  // const handleBook = () => {
+  //   console.log("Hello World");
+  // };
   const { user } = React.useContext(AuthContext);
   const [bookingDetails, setBookingDetails] = React.useState({
     name: "",
@@ -44,7 +48,7 @@ const Book = () => {
       time: busDetails?.time,
     });
   };
-  console.log(bookingDetails);
+  // console.log(bookingDetails);
   const getBook = async () => {
     const response = await axios.post(
       "http://localhost:8800/api/book/getBook",
@@ -61,15 +65,24 @@ const Book = () => {
             <h1 className="pTitle">Passenger Details</h1>
             <div className="PassengerItems">
               <label>Name of Passenger</label>
-              <input type="text" value={bookingDetails.name} />
+              <input type="text" value={bookingDetails.name} 
+               onChange={(e) =>
+                setBookingDetails({ ...bookingDetails, name: e.target.value })
+              }/>
             </div>
             <div className="PassengerItems">
               <label>Email</label>
-              <input type="email" value={bookingDetails.email} />
+              <input type="email" value={bookingDetails.email}
+               onChange={(e) =>
+                setBookingDetails({ ...bookingDetails, email: e.target.value })
+              } />
             </div>
             <div className="PassengerItems">
               <label>Mobile Number</label>
-              <input type="text" value={bookingDetails.phone} />
+              <input type="text" value={bookingDetails.phone} 
+               onChange={(e) =>
+                setBookingDetails({ ...bookingDetails, phone: e.target.value })
+              }/>
             </div>
             <div className="PassengerItems">
               <label>Boarding Points</label>
@@ -90,6 +103,7 @@ const Book = () => {
               </Form.Select>
             </div>
             <button onClick={(e) => bookBus(e)}>Proceed to Confirmation</button>
+            {/* <button onClick={handleBook}>Proceed to Confirmation</button> */}
           </div>
           <div className="details">
             <div className="traveldetails">
@@ -107,9 +121,7 @@ const Book = () => {
               <div className="travelItems">
                 <label>Seats : {busDetails?.selectedSeats.join(",")}</label>
               </div>
-              <div className="travelItems">
-                <label>Date : </label>
-              </div>
+
               <div className="travelItems">
                 <label>Travel : {busDetails?.name}</label>
               </div>
