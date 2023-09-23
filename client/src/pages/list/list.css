@@ -1,14 +1,19 @@
+/* Styles for the list container */
 .listContainer {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
+
+/* Styles for the list wrapper */
 .listWrapper {
   width: 100%;
   max-width: 1024px;
   display: flex;
   gap: 20px;
 }
+
+/* Styles for the search section */
 .listsearch {
   flex: 1;
   background-color: pink;
@@ -17,23 +22,28 @@
   border-radius: 10px;
   height: max-content;
 }
-.listresult {
-  flex: 3;
-}
+
+/* Styles for search section titles */
 .lsTitles {
   font-size: 20px;
   color: #555;
   margin-bottom: 10px;
 }
+
+/* Styles for search input items */
 .lsItem {
   display: flex;
   flex-direction: column;
   gap: 5px;
   margin-bottom: 10px;
 }
+
+/* Styles for labels inside search items */
 .lsItem > label {
   font-size: 12px;
 }
+
+/* Styles for the date picker */
 .lsItem > span {
   height: 30px;
   background-color: white;
@@ -42,6 +52,8 @@
   align-items: center;
   cursor: pointer;
 }
+
+/* Styles for the search button */
 .listsearch > button {
   padding: 10px;
   background-color: blue;
@@ -51,6 +63,8 @@
   font-weight: 500;
   cursor: pointer;
 }
+
+/* Styles for input fields */
 .lsItem > input {
   height: 30px;
   border: none;

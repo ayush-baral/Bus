@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import usersRoute from "./routes/users.js";
 import commonroute from "./routes/commonroute.js";
 import cors from "cors";
-
+import paymentroute from "./routes/paymentroute.js"
 dotenv.config();
 const app = express();
 
@@ -34,7 +34,7 @@ app.use("/api/bus", Bus);
 app.use("/api/book", Book);
 app.use("/api/users", usersRoute);
 app.use("/api/commonroute", commonroute);
-
+app.use("/api/payment",paymentroute)
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong";

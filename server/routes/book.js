@@ -9,7 +9,7 @@ import { verifyAdmin, verifyUser } from "../utils/verifytoken.js";
 const app = express();
 const router = express.Router();
 
-console.log("buasd");
+// console.log("buasd");
 //create
 router.post("/", bookBus);
 router.get("/", getallBook);

@@ -1,3 +1,4 @@
+/* Updated header styles */
 .header {
   background-color: #1f5156;
   color: white;
@@ -5,22 +6,30 @@
   justify-content: center;
   position: relative;
 }
+
+/* Added container for centering content */
 .headercontainer {
   width: 100%;
   max-width: 1024px;
   margin: 20px 0px 100px 0px;
   align-items: center;
 }
+
+/* Updated styles for the list of items */
 .headerList {
   display: flex;
   gap: 40px;
   margin-bottom: 50px;
 }
+
+/* Updated styles for list item */
 .headerListItem {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
+/* Updated styles for the search input container */
 .headerSearch {
   height: 30px;
   background-color: white;
@@ -35,22 +44,32 @@
   width: 100%;
   max-width: 1024px;
 }
+
+/* Updated styles for FontAwesome icons */
 .headerIcon {
   color: lightgray;
 }
+
+/* Updated styles for search item container */
 .headerSearchItem {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
+/* Updated styles for search input field */
 .headerSearchInput {
   border: none;
   outline: none;
 }
+
+/* Updated styles for search text */
 .headerSearchText {
   color: lightgray;
   cursor: pointer;
 }
+
+/* Updated position of the date picker */
 .date {
   position: absolute;
   top: 51px;
