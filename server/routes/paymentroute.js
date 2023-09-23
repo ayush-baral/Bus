@@ -1,7 +1,7 @@
 import express from "express";
 import axios from "axios";
 import dotenv from "dotenv";
-
+// KHALTI_SECRET_KEY=2bcd1dcfa0f34f368ab246f27f706c0d
 const app = express();
 const router = express.Router();
 dotenv.config();

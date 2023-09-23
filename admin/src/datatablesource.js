@@ -107,6 +107,11 @@ export const bookingColumns = [
   { field: "userId", headerName: "UserId", width: 250 },
   { field: "busId", headerName: "BusId", width: 250 },
   {
+    field: "name",
+    headerName: "Bus Name",
+    width: 100,
+  },
+  {
     field: "nameOfPassenger",
     headerName: "Name of Passenger",
     width: 150,
@@ -142,4 +147,6 @@ export const bookingColumns = [
     headerName: "Date",
     width: 100,
   },
+ 
+
 ];

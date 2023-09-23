@@ -1,6 +1,7 @@
 import express from "express";
 import {
   bookBus,
+  deletebook,
   getBook,
   getallBook,
 } from "../controllers/bookingcontroller.js";
@@ -14,5 +15,5 @@ const router = express.Router();
 router.post("/", bookBus);
 router.get("/", getallBook);
 router.get("/:id", verifyUser, getBook);
-
+router.delete("/:id", verifyAdmin,deletebook);
 export default router;

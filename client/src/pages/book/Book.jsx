@@ -10,9 +10,6 @@ import * as moment from "moment-timezone";
 // import { PDFDownloadLink, Page, Text, Document, StyleSheet } from "@react-pdf/renderer";
 
 const Book = () => {
-  // const handleBook = () => {
-  //   console.log("Hello World");
-  // };
   const { user } = React.useContext(AuthContext);
   const [bookingDetails, setBookingDetails] = React.useState({
     name: "",
@@ -65,24 +62,39 @@ const Book = () => {
             <h1 className="pTitle">Passenger Details</h1>
             <div className="PassengerItems">
               <label>Name of Passenger</label>
-              <input type="text" value={bookingDetails.name} 
-               onChange={(e) =>
-                setBookingDetails({ ...bookingDetails, name: e.target.value })
-              }/>
+              <input
+                type="text"
+                value={bookingDetails.name}
+                onChange={(e) =>
+                  setBookingDetails({ ...bookingDetails, name: e.target.value })
+                }
+              />
             </div>
             <div className="PassengerItems">
               <label>Email</label>
-              <input type="email" value={bookingDetails.email}
-               onChange={(e) =>
-                setBookingDetails({ ...bookingDetails, email: e.target.value })
-              } />
+              <input
+                type="email"
+                value={bookingDetails.email}
+                onChange={(e) =>
+                  setBookingDetails({
+                    ...bookingDetails,
+                    email: e.target.value,
+                  })
+                }
+              />
             </div>
             <div className="PassengerItems">
               <label>Mobile Number</label>
-              <input type="text" value={bookingDetails.phone} 
-               onChange={(e) =>
-                setBookingDetails({ ...bookingDetails, phone: e.target.value })
-              }/>
+              <input
+                type="text"
+                value={bookingDetails.phone}
+                onChange={(e) => {
+                  setBookingDetails({
+                    ...bookingDetails,
+                    phone: e.target.value,
+                  });
+                }}
+              />
             </div>
             <div className="PassengerItems">
               <label>Boarding Points</label>
@@ -103,7 +115,6 @@ const Book = () => {
               </Form.Select>
             </div>
             <button onClick={(e) => bookBus(e)}>Proceed to Confirmation</button>
-            {/* <button onClick={handleBook}>Proceed to Confirmation</button> */}
           </div>
           <div className="details">
             <div className="traveldetails">

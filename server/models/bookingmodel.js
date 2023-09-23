@@ -31,6 +31,9 @@ const BookSchema = new mongoose.Schema(
     status: {
       type: String,
     },
+    name:{
+      types:String,
+    }
   },
   { timestamps: true }
 );
