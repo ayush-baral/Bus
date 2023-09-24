@@ -5,6 +5,6 @@ import { verifyAdmin } from "../utils/verifytoken.js";
 const app = express();
 const router = express.Router();
 
-router.get("/data-count", verifyAdmin, datacount);
+router.get("/data-count", datacount);
 
 export default router;

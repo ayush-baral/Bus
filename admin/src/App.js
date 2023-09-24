@@ -74,7 +74,8 @@ function App() {
                 }
               />
               <Route
-                path="edit"
+                path="/bus/edit/:id"
+                exact
                 element={
                   <ProtectedRoute>
                     <EditBus />
@@ -92,7 +93,8 @@ function App() {
                 }
               />
                <Route
-                path="edit"
+               path="/book/edit/:id"
+               exact
                 element={
                   <ProtectedRoute>
                     <EditBook />

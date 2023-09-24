@@ -3,12 +3,13 @@ import "./widget.scss";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import { Link } from "react-router-dom"
 
-const Widget = ({ type }) => {
+const Widget = ({ type, count }) => {
   let data;
 
   // Temporary values
-  const amount = 100;
+  const amount = 12;
   const diff = 20;
 
   switch (type) {
@@ -17,6 +18,7 @@ const Widget = ({ type }) => {
         title: "USERS",
         isMoney: false,
         link: "See all users",
+        onClick: "/users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -31,6 +33,7 @@ const Widget = ({ type }) => {
     case "bus":
       data = {
         title: "BUS",
+        onClick: "/bus",
         isMoney: false,
         link: "View all Bus",
         icon: (
@@ -53,9 +56,9 @@ const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.isMoney && "$"} {count}
         </span>
-        <span className="link">{data.link}</span>
+        <Link to={data.onClick}><span className="link">{data.link}</span></Link>
       </div>
       <div className="right">
         <div className="percentage positive">
