@@ -5,7 +5,7 @@ import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import Searchitem from "../../components/searchitem/Searchitem";
+import Searchitem, { parseDate } from "../../components/searchitem/Searchitem";
 import useFetch from "../../hooks/useFetch";
 import moment from "moment-timezone";
 
@@ -15,19 +15,17 @@ const List = () => {
   const [destinationCity, setDestinationCity] = useState(
     location.state?.destinationCity || ""
   );
-
-  // Parse date from location state or use the current date
-  const initialDate = location.state?.date
-    ? moment(location.state.date).toDate()
-    : new Date();
-
-  const [date, setDate] = useState(initialDate);
+  const [date, setDate] = useState(
+    moment(location.state?.date || new Date()).format("DD/MM/YYYY") ||
+      moment(new Date()).format("DD/MM/YYYY")
+  );
+  console.log(moment(location.state?.date).format("DD/MM/YYYY"))
+  console.log("loc", location.state?.date)
   const [openDate, setOpenDate] = useState(false);
 
   const { data, loading, error, reFetch } = useFetch(
     `/bus/buses?startCity=${startCity}&destinationCity=${destinationCity}&travelDate=${date}`
   );
-
   const handleClick = () => {
     reFetch();
   };
@@ -50,12 +48,12 @@ const List = () => {
             </div>
             <div className="lsItem">
               <label>Date</label>
-              <span onClick={() => setOpenDate(!openDate)}>
-                {moment(date).format("DD/MM/YYYY")}
-              </span>
+              <span onClick={() => setOpenDate(!openDate)}>{`${moment(
+                parseDate(date)
+              ).format("DD/MM/YYYY")}`}</span>
               {openDate && (
                 <Calendar
-                  onChange={(date) => setDate(date)}
+                  onChange={(date) => setDate(moment(date).format("DD/MM/YYYY"))}
                   minDate={new Date()}
                 />
               )}

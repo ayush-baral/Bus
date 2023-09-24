@@ -1,6 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./searchitem.css";
+import { parse } from "date-fns";
+import * as moment from "moment-timezone"
+
+export function parseDate(dateString) {
+  if(typeof dateString === "object"){
+    dateString = moment(dateString).format('DD/MM/YYYY').toString()
+  }
+  const parts = dateString.split('/');
+  if (parts.length === 3) {
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; // Months are zero-based
+    const year = parseInt(parts[2], 10);
+
+    if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+      return new Date(year, month, day);
+    }
+  }
+  return null; // Return null for invalid dates
+}
 const Searchitem = ({ item }) => {
   return (
     <div className="searchItem">
@@ -25,9 +44,8 @@ const Searchitem = ({ item }) => {
         <h1>{item.pricePerSeat}</h1>
       </div>
       <Link
-        to={`/bus/${item._id}?date=${new Date(
-          item.departureDate
-        ).toISOString()}`}
+        to={`/bus/${item._id}?date=${
+          parseDate(item.departureDate).toISOString()}&busId=${item._id}`}
       >
         <button className="siCheckButton">Reserve a Seat</button>
       </Link>

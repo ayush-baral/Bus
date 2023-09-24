@@ -77,7 +77,7 @@ export const getBusesFromTo = async (req, res, next) => {
       $options: "i",
     };
   }
-
+  console.log(travelDate)
   if (travelDate) {
     filter["unavailableDates"] = {
       $nin: [travelDate],
