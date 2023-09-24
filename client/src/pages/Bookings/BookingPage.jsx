@@ -9,13 +9,15 @@ export default function BookingPage() {
   console.log(user);
   const [bookings, setBookings] = useState([]);
   React.useEffect(() => {
-    const getBooking = async () => {
-      const booking = await axios.get(
-        `http://localhost:8800/api/book?userId=${user?._id || ""}`
-      );
-      setBookings(booking.data);
-    };
-    getBooking();
+    if(user?._id){
+      const getBooking = async () => {
+        const booking = await axios.get(
+          `http://localhost:8800/api/book?userId=${user?._id || ""}`
+        );
+        setBookings(booking.data);
+      };
+      getBooking();
+    }
   }, [user?._id]);
   return (
     <div>

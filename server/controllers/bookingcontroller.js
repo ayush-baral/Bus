@@ -27,7 +27,7 @@ export const getBook = async (req, res, next) => {
 //get all book
 export const getallBook = async (req, res, next) => {
   try {
-    const { bookingDate, userId } = req.query;
+    const { bookingDate, userId, busId } = req.query;
     let startOfDay;
     let endOfDay;
     if (bookingDate) {
@@ -45,6 +45,9 @@ export const getallBook = async (req, res, next) => {
     }
     if (userId) {
       filter.userId = userId;
+    }
+    if(busId){
+      filter.busId = busId
     }
     const books = await Book.find(filter);
     return res.status(200).json(books);

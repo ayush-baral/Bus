@@ -12,6 +12,9 @@ const BusSeatSelection = () => {
   const user = useContext(AuthContext);
 
   const handleSeatClick = (seatNumber) => {
+    if(bookedSeats.includes(seatNumber)){
+      return;
+    }
     if (selectedSeats.includes(seatNumber)) {
       setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
     } else {
@@ -21,6 +24,7 @@ const BusSeatSelection = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const seatsFromQuery = queryParams.get("selectedSeats");
   const departureDate = queryParams.get("date");
+  const busId = queryParams.get("busId");
   React.useEffect(() => {
     if (seatsFromQuery && seatsFromQuery.length) {
       setSelectedSeats(seatsFromQuery.split(","));
@@ -59,7 +63,7 @@ const BusSeatSelection = () => {
         rowSeats.push(
           <div
             key={seatId}
-            className={`seat ${isSelected || isBooked ? "selected" : ""}`}
+            className={`seat ${isSelected || isBooked ? "selected" : ""}`} // change color
             onClick={() => handleSeatClick(seatId)}
           >
             {/* No content */}
@@ -96,25 +100,24 @@ const BusSeatSelection = () => {
   React.useEffect(() => {
     const getBookings = async () => {
       const dDate = moment(departureDate).format("YYYY/MM/DD");
-      if (dDate) {
+      if (dDate && busId) {
         const bookings = await axios.get(
-          `http://localhost:8800/api/book?bookingDate=${dDate}`
+          `http://localhost:8800/api/book?bookingDate=${dDate}&busId=${busId}`
         );
         setBookings(bookings.data);
       }
     };
     getBookings();
-  }, [departureDate]);
+  }, [departureDate, busId]);
 
   React.useEffect(() => {
     // if (bookings.length) {
-    console.log(bookings);
     const bookedSeats = bookings?.reduce((acc, curr) => {
       acc = [...curr.seats, ...acc];
       return acc;
     }, []);
+    console.log(bookedSeats)
     setBookedSeats(bookedSeats);
-    console.log(bookedSeats);
     // }
   }, [bookings]);
   return (
