@@ -11,7 +11,8 @@ import { AuthContext } from "./context/Authcontext";
 import { bookingColumns, busColumns, userColumns } from "./datatablesource";
 import NewBus from "./pages/newBus/NewBus";
 import Book from "./pages/book/Book";
-
+import EditBus from "./pages/editbus/EditBus";
+import EditBook from "./pages/editbook/EditBook";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const ProtectedRoute = ({ children }) => {
@@ -45,14 +46,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              {/* <Route
-                path=":userId"
-                element={
-                  <ProtectedRoute>
-                    <Single />
-                  </ProtectedRoute>
-                }
-              /> */}
+
               <Route
                 path="new"
                 element={
@@ -71,12 +65,19 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-
               <Route
                 path="new"
                 element={
                   <ProtectedRoute>
                     <NewBus />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <ProtectedRoute>
+                    <EditBus />
                   </ProtectedRoute>
                 }
               />
@@ -90,14 +91,14 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              {/* <Route
-                path="new"
+               <Route
+                path="edit"
                 element={
                   <ProtectedRoute>
-                    <Book title="Add New Booking" />
+                    <EditBook />
                   </ProtectedRoute>
                 }
-              /> */}
+              />
             </Route>
           </Route>
         </Routes>

@@ -103,12 +103,12 @@ export const busInputs = [
     type: "date",
     placeholder: "MM/DD/YYYY",
   },
-  {
-    id: "unavailable date",
-    label: "Unavailable Date",
-    type: "date",
-    placeholder: "DD/MM/YYYY",
-  },
+  // {
+  //   id: "unavailable date",
+  //   label: "Unavailable Date",
+  //   type: "date",
+  //   placeholder: "DD/MM/YYYY",
+  // },
 ];
 
 export const bookInputs = [
@@ -116,60 +116,50 @@ export const bookInputs = [
     id: "userId",
     label: "User ID",
     type: "text",
-    // placeholder: "Bhujuri Travels",
   },
   {
     id: "busId",
     label: "Bus ID",
     type: "text",
-    // placeholder: "Ga 1234",
   },
   {
     id: "boardingPoint",
     label: "Boarding Point",
     type: "text",
-    // placeholder: "AC Deluxe",
   },
   {
     id: "nameOfPassenger",
     label: "Name of Passenger",
     type: "text",
-    // placeholder: "Pokhara",
   },
   {
     id: "email",
     label: "Email",
     type: "text",
-    // placeholder: "Kathmandu",
   },
   {
     id: "phonenumber",
     label: "Phone Number",
     type: "text",
-    // placeholder: "30",
   },
   {
     id: "seats",
     label: "Seats",
     type: "text",
-    // placeholder: "12",
   },
   {
     id: "price",
     label: "Price",
     type: "text",
-    // placeholder: "1000",
   },
   {
     id: "time",
     label: "Time",
     type: "text",
-    // placeholder: "1234567890",
   },
   {
     id: "date",
     label: "Date",
     type: "date",
-    // placeholder: "A/C and fan system,Music system ,LED tv",
   },
 ];

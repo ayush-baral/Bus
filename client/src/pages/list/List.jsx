@@ -54,7 +54,10 @@ const List = () => {
                 {moment(date).format("DD/MM/YYYY")}
               </span>
               {openDate && (
-                <Calendar onChange={(date) => setDate(date)} minDate={new Date()} />
+                <Calendar
+                  onChange={(date) => setDate(date)}
+                  minDate={new Date()}
+                />
               )}
             </div>
             <button onClick={handleClick}>Search</button>
@@ -66,7 +69,10 @@ const List = () => {
               <>
                 {data.length > 0 ? (
                   data.map((item) => (
-                    <Searchitem item={{ ...item, departureDate: date }} key={item._id} />
+                    <Searchitem
+                      item={{ ...item, departureDate: date }}
+                      key={item._id}
+                    />
                   ))
                 ) : (
                   <p>No buses found</p>
@@ -80,7 +86,8 @@ const List = () => {
   );
 };
 
- export default List;
+export default List;
+
 // import React, { useState } from "react";
 // import "./list.css";
 // import NavBar from "../../components/navbar/Navbar";

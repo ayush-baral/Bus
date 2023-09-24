@@ -32,7 +32,10 @@ const BookSchema = new mongoose.Schema(
       type: String,
     },
     name:{
-      types:String,
+      type:String,
+    },
+    boardingPoint:{
+      type:String,
     }
   },
   { timestamps: true }

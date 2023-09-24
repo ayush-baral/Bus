@@ -43,9 +43,9 @@ const Book = () => {
       price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
       date: busDetails?.departureDate,
       time: busDetails?.time,
+      name:busDetails?.name,
     });
   };
-  // console.log(bookingDetails);
   const getBook = async () => {
     const response = await axios.post(
       "http://localhost:8800/api/book/getBook",

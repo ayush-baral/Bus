@@ -60,3 +60,17 @@ export const getallBook = async (req, res, next) => {
       next(err);
     }
   }
+  export const updateBook = async (req, res, next) => {
+    try {
+      const updatedBook = await Book.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).json(updatedBook);
+    } catch (err) {
+      next(err);
+    }
+  };

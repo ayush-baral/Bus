@@ -16,40 +16,64 @@ const Datatable = ({ columns }) => {
     setList(data);
   }, [data]);
 
+  // const handleEdit = (id) => {
+  //   if (path === "book" || path === "bus") {
+  //     return <Link to={`/${path}/edit/${id}`}>Edit</Link>;
+  //   }
+  // };
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/${path}/${id}`);
       setList(list.filter((item) => item._id !== id));
     } catch (error) {}
   };
-
   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
-            >
-              Delete
+        if (path === "bus" || path === "book") {
+          return (
+            <div className="cellAction">
+              <div className="editButton">
+                <Link to={`/${path}/edit/${params.row._id}`}>Edit</Link>
+              </div>
+              <div
+                className="deleteButton"
+                onClick={() => handleDelete(params.row._id)}
+              >
+                Delete
+              </div>
             </div>
-          </div>
-        );
+          );
+        } else {
+          return (
+            <div className="cellAction">
+              <div
+                className="deleteButton"
+                onClick={() => handleDelete(params.row._id)}
+              >
+                Delete
+              </div>
+            </div>
+          );
+        }
       },
     },
   ];
 
+
+  const renderAddNewButton = (path === "users" || path === "bus") && (
+    <Link to={`/${path}/new`} className="link">
+      Add New
+    </Link>
+  );
   return (
     <div className="datatable">
       <div className="datatableTitle">
         {path}
-        <Link to={`/${path}/new`} className="link">
-          Add New
-        </Link>
+        {renderAddNewButton}
       </div>
       {list && (
         <DataGrid

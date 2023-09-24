@@ -32,12 +32,12 @@ const Sidebar = () => {
       <hr />
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
-          <li>
+          {/* <p className="title">MAIN</p> */}
+          {/* <li>
             <DashboardIcon className="icon" />
             <span>Dashboard</span>
-          </li>
-          <p className="title">LISTS</p>
+          </li> */}
+          {/* <p className="title">LISTS</p> */}
           <Link to="/users" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
@@ -56,10 +56,10 @@ const Sidebar = () => {
               <span>Bookings</span>
             </li>
           </Link>
-          <li>
+          {/* <li>
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
-          </li>
+          </li> */}
           <p className="title">USER</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />

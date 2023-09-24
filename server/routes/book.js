@@ -4,6 +4,7 @@ import {
   deletebook,
   getBook,
   getallBook,
+  updateBook,
 } from "../controllers/bookingcontroller.js";
 import { verifyAdmin, verifyUser } from "../utils/verifytoken.js";
 
@@ -16,4 +17,5 @@ router.post("/", bookBus);
 router.get("/", getallBook);
 router.get("/:id", verifyUser, getBook);
 router.delete("/:id", verifyAdmin,deletebook);
+router.put("/:id", verifyAdmin, updateBook);
 export default router;
