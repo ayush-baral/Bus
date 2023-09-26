@@ -3,7 +3,7 @@ import "./widget.scss";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const Widget = ({ type, count }) => {
   let data;
@@ -58,13 +58,12 @@ const Widget = ({ type, count }) => {
         <span className="counter">
           {data.isMoney && "$"} {count}
         </span>
-        <Link to={data.onClick}><span className="link">{data.link}</span></Link>
+        <Link to={data.onClick}>
+          <span className="link">{data.link}</span>
+        </Link>
       </div>
       <div className="right">
-        <div className="percentage positive">
-          <KeyboardArrowUpIcon />
-          {diff} %
-        </div>
+        <div className="percentage positive"></div>
         {data.icon}
       </div>
     </div>

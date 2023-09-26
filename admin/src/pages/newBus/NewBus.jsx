@@ -40,9 +40,7 @@ const NewBus = () => {
         photos: list,
       };
 
-      // console.log("New Bus:", newBus);
       await axios.post("/bus", newBus);
-      // console.log("Upload Response:", response.data);
 
       navigate("/bus");
     } catch (error) {
@@ -89,7 +87,7 @@ const NewBus = () => {
                   <div className="formInput" key={input.id}>
                     <label>{input.label}</label>
                     <input
-                      id={input.id} // Update the name attribute
+                      id={input.id}
                       onChange={handleChange}
                       type={input.type}
                       placeholder={input.placeholder}

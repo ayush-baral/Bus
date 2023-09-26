@@ -163,3 +163,118 @@ export const bookInputs = [
     type: "date",
   },
 ];
+export const editbusInputs = [
+  {
+    id: "name",
+    label: "Name",
+    type: "text",
+  },
+  {
+    id: "busNumber",
+    label: "busNumber",
+    type: "text",
+  },
+  {
+    id: "busType",
+    label: "Bus Type",
+    type: "text",
+  },
+  {
+    id: "startCity",
+    label: "Start City",
+    type: "text",
+  },
+  {
+    id: "destinationCity",
+    label: "Destination City",
+    type: "text",
+  },
+  {
+    id: "totalSeats",
+    label: "Total Seats",
+    type: "text",
+  },
+  {
+    id: "availableSeats",
+    label: "Available Seats",
+    type: "text",
+  },
+  {
+    id: "pricePerSeat",
+    label: "Price",
+    type: "text",
+  },
+  {
+    id: "phonenum",
+    label: "Phone Number",
+    type: "text",
+  },
+  {
+    id: "features",
+    label: "Bus Features",
+    type: "text",
+  },
+  {
+    id: "time",
+    label: "Departure Time",
+    type: "text",
+  },
+  {
+    id: "boardingPoints",
+    label: "Boarding Point",
+    type: "text",
+  },
+  {
+    id: "date",
+    label: "Date",
+    type: "date",
+  },
+  {
+    id: "unavailable date",
+    label: "Unavailable Date",
+    type: "text",
+  },
+];
+
+export const editbookInputs = [
+  {
+    id: "boardingPoint",
+    label: "Boarding Point",
+    type: "text",
+  },
+  {
+    id: "nameOfPassenger",
+    label: "Name of Passenger",
+    type: "text",
+  },
+  {
+    id: "email",
+    label: "Email",
+    type: "text",
+  },
+  {
+    id: "phonenumber",
+    label: "Phone Number",
+    type: "text",
+  },
+  {
+    id: "seats",
+    label: "Seats",
+    type: "text",
+  },
+  {
+    id: "price",
+    label: "Price",
+    type: "text",
+  },
+  {
+    id: "time",
+    label: "Time",
+    type: "text",
+  },
+  {
+    id: "date",
+    label: "Date",
+    type: "date",
+  },
+];

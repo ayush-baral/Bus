@@ -1,6 +1,5 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-// import { userColumns, userRows } from "../../datatablesource";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -16,17 +15,20 @@ const Datatable = ({ columns }) => {
     setList(data);
   }, [data]);
 
-  // const handleEdit = (id) => {
-  //   if (path === "book" || path === "bus") {
-  //     return <Link to={`/${path}/edit/${id}`}>Edit</Link>;
-  //   }
-  // };
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/${path}/${id}`);
-      setList(list.filter((item) => item._id !== id));
-    } catch (error) {}
+    // Display a confirmation dialog
+    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+  
+    if (confirmDelete) {
+      try {
+        await axios.delete(`/${path}/${id}`);
+        setList(list.filter((item) => item._id !== id));
+      } catch (error) {
+        // Handle error here
+      }
+    }
   };
+  
   const actionColumn = [
     {
       field: "action",
@@ -62,7 +64,6 @@ const Datatable = ({ columns }) => {
       },
     },
   ];
-
 
   const renderAddNewButton = (path === "users" || path === "bus") && (
     <Link to={`/${path}/new`} className="link">

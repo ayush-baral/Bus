@@ -44,6 +44,8 @@ const Book = () => {
       date: busDetails?.departureDate,
       time: busDetails?.time,
       name:busDetails?.name,
+      destinationCity:busDetails?.destinationCity,
+      startCity:busDetails?.startCity,
     });
   };
   const getBook = async () => {

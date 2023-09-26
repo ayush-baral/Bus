@@ -1,67 +1,88 @@
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/Authcontext";
-import "./login.scss";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Login = () => {
+import "./login.scss";
+// import Footer from "../../components/footer/Footer";
+
+const Login = (props) => {
   const [credentials, setCredentials] = useState({
-    email: undefined,
-    password: undefined,
+    email: "",
+    password: "",
   });
+  const [loginStatus, setLoginStatus] = useState(null); // Track login status
 
   const { loading, error, dispatch } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
+  const queryParams = new URLSearchParams(window.location.search);
+  const busId = queryParams.get("busId");
+  const selectedSeats = queryParams.get("selectedSeats");
+  const date = queryParams.get("date");
 
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post("auth/login", credentials);
-      // const user = res.data; // Assuming the response contains the user object
-      // Dispatch LOGIN_SUCCESS with the user object
-      if (res.data.isAdmin) {
-        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-        navigate("/");
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      setLoginStatus("success"); // Set login status to success
+      if (busId) {
+        navigate(`/bus/${busId}?selectedSeats=${selectedSeats}&date=${date}`);
       } else {
-        dispatch({
-          type: "LOGIN_FAILURE",
-          payload: { message: "You are not allowed" },
-        });
+        navigate("/");
       }
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      setLoginStatus("error"); // Set login status to error
     }
   };
 
+  useEffect(() => {
+    let timer;
+    if (loginStatus) {
+      timer = setTimeout(() => {
+        setLoginStatus(null);
+      }, 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [loginStatus]);
+
   return (
-    <div className="login">
-      <div className="lContainer">
-        <input
-          type="text"
-          placeholder="email"
-          id="email"
-          onChange={handleChange}
-          className="lInput"
-        />
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          onChange={handleChange}
-          className="lInput"
-        />
-        <button disabled={loading} onClick={handleClick} className="lButton">
-          Login
-        </button>
-        {error && <span>{error.message}</span>}
+    <>
+      <div className="login">
+        <div className="lContainer">
+          <input
+            type="text"
+            placeholder="email"
+            id="email"
+            value={credentials.email}
+            onChange={handleChange}
+            className="lInput"
+          />
+          <input
+            type="password"
+            placeholder="password"
+            id="password"
+            value={credentials.password}
+            onChange={handleChange}
+            className="lInput"
+          />
+          <button disabled={loading} onClick={handleClick} className="lButton">
+            Login
+          </button>
+          {loginStatus === "success" && <span>Login successful!</span>}
+          {loginStatus === "error" && (
+            <span>Login failed. Please try again.</span>
+          )}
+        </div>
       </div>
-    </div>
+      {/* <Footer /> */}
+    </>
   );
 };
 

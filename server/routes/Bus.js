@@ -19,7 +19,8 @@ console.log("buasd");
 router.post("/", verifyAdmin, createBus);
 
 //update
-router.put("/:id", verifyAdmin, updateBus);
+// router.put("/:id", verifyAdmin, updateBus);
+router.put("/:id",  updateBus);
 //delete
 router.delete("/:id", verifyAdmin, deleteBus);
 
@@ -29,9 +30,6 @@ router.get("/find/:id", getBus);
 router.get("/", getallBus);
 router.get("/buses", getBusesFromTo);
 router.get("/cities", getCities);
-// router.get("/", getallBus);
-// const failed = true;
 
-// if (failed) return next(createError(401, "You are not authenticated!"));
 
 export default router;

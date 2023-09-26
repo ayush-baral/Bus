@@ -46,10 +46,10 @@ const Login = (props) => {
     let timer;
     if (loginStatus) {
       timer = setTimeout(() => {
-        setLoginStatus(null); // Clear the login status message after 3 seconds
+        setLoginStatus(null);
       }, 3000);
     }
-    return () => clearTimeout(timer); // Clear the timer when the component unmounts
+    return () => clearTimeout(timer);
   }, [loginStatus]);
 
   return (

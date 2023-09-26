@@ -1,5 +1,5 @@
 export const userColumns = [
-  { field: "id", headerName: "ID", width: 70 },
+  // { field: "id", headerName: "ID", width: 70 },
   {
     field: "user",
     headerName: "User",
@@ -30,7 +30,7 @@ export const userColumns = [
   },
 ];
 export const busColumns = [
-  { field: "_id", headerName: "ID", width: 250 },
+  // { field: "_id", headerName: "ID", width: 250 },
   {
     field: "name",
     headerName: "Name",
@@ -104,8 +104,8 @@ export const busColumns = [
   },
 ];
 export const bookingColumns = [
-  { field: "userId", headerName: "UserId", width: 250 },
-  { field: "busId", headerName: "BusId", width: 250 },
+  // { field: "userId", headerName: "UserId", width: 250 },
+  // { field: "busId", headerName: "BusId", width: 250 },
   {
     field: "name",
     headerName: "Bus Name",
@@ -115,6 +115,16 @@ export const bookingColumns = [
     field: "nameOfPassenger",
     headerName: "Name of Passenger",
     width: 150,
+  },
+  {
+    field: "startCity",
+    headerName: "Start City",
+    width: 100,
+  },
+  {
+    field: "destinationCity",
+    headerName: "Destination City",
+    width: 100,
   },
   {
     field: "boardingPoint",

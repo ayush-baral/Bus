@@ -10,6 +10,12 @@ const BookSchema = new mongoose.Schema(
     nameOfPassenger: {
       type: String,
     },
+    startCity:{
+      type:String,
+    },
+    destinationCity:{
+      type:String,
+    },
     email: {
       type: String,
     },

@@ -46,8 +46,8 @@ export const getallBook = async (req, res, next) => {
     if (userId) {
       filter.userId = userId;
     }
-    if(busId){
-      filter.busId = busId
+    if (busId) {
+      filter.busId = busId;
     }
     const books = await Book.find(filter);
     return res.status(200).json(books);
@@ -55,25 +55,25 @@ export const getallBook = async (req, res, next) => {
     next(err);
   }
 };
-  export const deletebook=async (req,res,next)=>{
-    try {
-      await Book.findByIdAndDelete(req.params.id);
-      res.status(200).json("Booking has been deleted");
-    } catch (err) {
-      next(err);
-    }
+export const deletebook = async (req, res, next) => {
+  try {
+    await Book.findByIdAndDelete(req.params.id);
+    res.status(200).json("Booking has been deleted");
+  } catch (err) {
+    next(err);
   }
-  export const updateBook = async (req, res, next) => {
-    try {
-      const updatedBook = await Book.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      );
-      res.status(200).json(updatedBook);
-    } catch (err) {
-      next(err);
-    }
-  };
+};
+export const updateBook = async (req, res, next) => {
+  try {
+    const updatedBook = await Book.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedBook);
+  } catch (err) {
+    next(err);
+  }
+};
