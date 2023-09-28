@@ -42,7 +42,8 @@ const BookSchema = new mongoose.Schema(
     },
     boardingPoint:{
       type:String,
-    }
+    },
+    
   },
   { timestamps: true }
 );

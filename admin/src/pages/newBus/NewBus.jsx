@@ -6,6 +6,8 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import axios from "axios";
 import { busInputs } from "../../formSource";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 const NewBus = () => {
   const [files, setFiles] = useState([]);
@@ -16,8 +18,24 @@ const NewBus = () => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleClick = async (e) => {
-    e.preventDefault();
+  const handleAddConfirmation = () => {
+    // Show a confirmation SweetAlert2 before adding a new bus
+    Swal.fire({
+      title: "Confirm Add Bus",
+      text: "Are you sure you want to add this bus?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Add Bus",
+      cancelButtonText: "No, Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed the add, proceed with the add action
+        handleAddBus();
+      }
+    });
+  };
+
+  const handleAddBus = async () => {
     try {
       const list = await Promise.all(
         Object.values(files).map(async (file) => {
@@ -42,9 +60,25 @@ const NewBus = () => {
 
       await axios.post("/bus", newBus);
 
-      navigate("/bus");
+      // Show a success SweetAlert2 when the bus is added successfully
+      Swal.fire({
+        icon: "success",
+        title: "Bus Added",
+        text: "The bus has been added successfully.",
+      }).then(() => {
+        // Clear the form and file input after success
+        setFiles([]);
+        setInfo({});
+        navigate("/bus");
+      });
     } catch (error) {
       console.error("Error:", error);
+      // Show an error SweetAlert2 if the bus addition fails
+      Swal.fire({
+        icon: "error",
+        title: "Add Bus Failed",
+        text: "Bus addition failed. Please try again later.",
+      });
     }
   };
 
@@ -94,7 +128,9 @@ const NewBus = () => {
                     />
                   </div>
                 ))}
-              <button onClick={handleClick}>Send</button>
+              <button type="button" onClick={handleAddConfirmation}>
+                Send
+              </button>
             </form>
           </div>
         </div>

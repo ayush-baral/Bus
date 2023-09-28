@@ -2,16 +2,17 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/Authcontext";
 import { useNavigate, useParams } from "react-router-dom";
-
 import "./login.scss";
-// import Footer from "../../components/footer/Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
-  const [loginStatus, setLoginStatus] = useState(null); // Track login status
 
   const { loading, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Login = (props) => {
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
+
   const queryParams = new URLSearchParams(window.location.search);
   const busId = queryParams.get("busId");
   const selectedSeats = queryParams.get("selectedSeats");
@@ -30,7 +32,14 @@ const Login = (props) => {
     try {
       const res = await axios.post("auth/login", credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      setLoginStatus("success"); // Set login status to success
+
+      // Display a success message using SweetAlert2
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "You have been successfully logged in.",
+      });
+
       if (busId) {
         navigate(`/bus/${busId}?selectedSeats=${selectedSeats}&date=${date}`);
       } else {
@@ -38,19 +47,21 @@ const Login = (props) => {
       }
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
-      setLoginStatus("error"); // Set login status to error
+
+      // Display error toast
+      toast.error("Login failed. Please try again.");
     }
   };
 
   useEffect(() => {
     let timer;
-    if (loginStatus) {
+    if (error) {
       timer = setTimeout(() => {
-        setLoginStatus(null);
+        dispatch({ type: "LOGIN_FAILURE", payload: null });
       }, 3000);
     }
     return () => clearTimeout(timer);
-  }, [loginStatus]);
+  }, [error, dispatch]);
 
   return (
     <>
@@ -75,13 +86,9 @@ const Login = (props) => {
           <button disabled={loading} onClick={handleClick} className="lButton">
             Login
           </button>
-          {loginStatus === "success" && <span>Login successful!</span>}
-          {loginStatus === "error" && (
-            <span>Login failed. Please try again.</span>
-          )}
         </div>
       </div>
-      {/* <Footer /> */}
+      <ToastContainer />
     </>
   );
 };

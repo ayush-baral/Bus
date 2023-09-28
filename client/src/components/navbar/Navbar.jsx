@@ -3,20 +3,36 @@ import { Link, NavLink } from "react-router-dom";
 import "./navbar.css";
 import { AuthContext } from "../../context/Authcontext";
 import MenuIcon from "@mui/icons-material/Menu";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+import { useNavigate } from "react-router-dom";
+
 function NavBar() {
   const { user, dispatch } = useContext(AuthContext);
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => setClick(!click);
+  const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-    if (confirmLogout) {
-      dispatch({ type: "LOGOUT" });
-      // Perform any additional logout logic if needed
-    }
+    Swal.fire({
+      title: "Logout Confirmation",
+      text: "Are you sure you want to logout?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({ type: "LOGOUT" });
+        Swal.fire("Logout Successful", "You have been logged out.And Directed to Home Page", "success");
+        navigate("/");
+      }
+    });
   };
 
   return (

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
@@ -32,16 +34,44 @@ const EditBus = () => {
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleEditConfirmation = () => {
+    // Show a confirmation SweetAlert2 before proceeding with the edit
+    Swal.fire({
+      title: "Confirm Edit",
+      text: "Are you sure you want to edit this bus data?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Edit",
+      cancelButtonText: "No, Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed the edit, proceed with the edit action
+        handleEdit();
+      }
+    });
+  };
+
+  const handleEdit = () => {
     axios
       .put(`http://localhost:8800/api/bus/${id}`, formData)
       .then((result) => {
         console.log(result);
         navigate("/bus");
+        // Show a success SweetAlert2 when the edit is successful
+        Swal.fire({
+          icon: "success",
+          title: "Bus Updated",
+          text: "The bus data has been successfully updated.",
+        });
       })
       .catch((err) => {
         console.log("Error Updating the data ", err);
+        // Show an error SweetAlert2 if the edit fails
+        Swal.fire({
+          icon: "error",
+          title: "Update Failed",
+          text: "Bus data update failed. Please try again later.",
+        });
       });
   };
 
@@ -67,7 +97,7 @@ const EditBus = () => {
               {isLoading ? (
                 <div>Loading...</div>
               ) : (
-                <form onSubmit={handleSubmit}>
+                <form>
                   <div className="formInput">
                     <label htmlFor="file">
                       Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -94,7 +124,9 @@ const EditBus = () => {
                         />
                       </div>
                     ))}
-                  <button type="submit">Update</button>
+                  <button type="button" onClick={handleEditConfirmation}>
+                    Update
+                  </button>
                 </form>
               )}
             </div>

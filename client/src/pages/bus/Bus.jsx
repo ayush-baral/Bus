@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/Authcontext";
 import axios from "axios";
 import * as moment from "moment-timezone";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 const BusSeatSelection = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -12,7 +14,7 @@ const BusSeatSelection = () => {
   const user = useContext(AuthContext);
 
   const handleSeatClick = (seatNumber) => {
-    if(bookedSeats.includes(seatNumber)){
+    if (bookedSeats.includes(seatNumber)) {
       return;
     }
     if (selectedSeats.includes(seatNumber)) {
@@ -35,18 +37,35 @@ const BusSeatSelection = () => {
   };
   const handleClick = () => {
     if (!selectedSeats.length) {
-      return alert("Select seats to continue booking.");
-    }
-    if (user?.user) {
-      navigate("/book", {
-        state: { ...bus, selectedSeats, departureDate: departureDate },
+      Swal.fire({
+        icon: "error",
+        title: "Select Seats",
+        text: "Please select seats to continue booking.",
       });
     } else {
-      navigate(
-        `/login?busId=${bus._id}&selectedSeats=${selectedSeats}&date=${departureDate}`
-      );
+      if (user?.user) {
+        navigate("/book", {
+          state: { ...bus, selectedSeats, departureDate: departureDate },
+        });
+      } else {
+        Swal.fire({
+          icon: "info",
+          title: "Login Required",
+          text: "You need to log in to continue booking.",
+          showCancelButton: true,
+          confirmButtonText: "Login",
+          cancelButtonText: "Cancel",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate(
+              `/login?busId=${bus._id}&selectedSeats=${selectedSeats}&date=${departureDate}`
+            );
+          }
+        });
+      }
     }
   };
+
   const calculateTotalAmount = () => {
     const seatPrice = bus?.pricePerSeat || 0;
     return selectedSeats.length * seatPrice;
@@ -116,7 +135,7 @@ const BusSeatSelection = () => {
       acc = [...curr.seats, ...acc];
       return acc;
     }, []);
-    console.log(bookedSeats)
+    console.log(bookedSeats);
     setBookedSeats(bookedSeats);
     // }
   }, [bookings]);

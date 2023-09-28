@@ -6,6 +6,20 @@ import jwt from "jsonwebtoken";
 // register
 export const register = async (req, res, next) => {
   try {
+    const existingUser = await User.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.email }],
+    });
+
+    if (existingUser) {
+      const errors = [];
+      if (existingUser.username === req.body.username) {
+        errors.push("Username is not unique.");
+      }
+      if (existingUser.email === req.body.email) {
+        errors.push("Email is not unique.");
+      }
+      return res.status(400).json({ error: errors.join(" ") });
+    }
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
     const newUser = new User({

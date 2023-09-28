@@ -4,6 +4,8 @@ import Navbar from "../../components/navbar/Navbar";
 import { editbookInputs } from "../../formSource";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 const EditBus = () => {
   const [files, setFiles] = useState([]);
@@ -31,17 +33,44 @@ const EditBus = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const handleEditConfirmation = () => {
+    // Show a confirmation SweetAlert2 before proceeding with the edit
+    Swal.fire({
+      title: "Confirm Edit",
+      text: "Are you sure you want to edit this book data?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Edit",
+      cancelButtonText: "No, Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed the edit, proceed with the edit action
+        handleEdit();
+      }
+    });
+  };
  
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleEdit = () => {
     axios
       .put(`http://localhost:8800/api/book/${id}`, formData)
       .then((result) => {
         console.log(result);
         navigate("/book");
+        // Show a success SweetAlert2 when the edit is successful
+        Swal.fire({
+          icon: "success",
+          title: "Bookings Updated",
+          text: "The book data has been successfully updated.",
+        });
       })
       .catch((err) => {
         console.log("Error Updating the data ", err);
+        // Show an error SweetAlert2 if the edit fails
+        Swal.fire({
+          icon: "error",
+          title: "Update Failed",
+          text: "Book data update failed. Please try again later.",
+        });
       });
   };
 
@@ -57,7 +86,7 @@ const EditBus = () => {
               {isLoading ? (
                 <div>Loading...</div>
               ) : (
-                <form onSubmit={handleSubmit}>
+                <form>
                   {editbookInputs &&
                     editbookInputs.map((input) => (
                       <div className="formInput" key={input.id}>
@@ -71,7 +100,9 @@ const EditBus = () => {
                         />
                       </div>
                     ))}
-                  <button type="submit">Update</button>
+                  <button type="button" onClick={handleEditConfirmation}>
+                    Update
+                  </button>
                 </form>
               )}
             </div>

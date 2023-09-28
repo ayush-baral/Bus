@@ -15,8 +15,8 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { startCase } from "lodash";
-// import useFetch from "../../hooks/useFetch";
 import axios from "axios";
+
 const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
   const [sourceCity, setSourceCity] = useState([]);
@@ -24,13 +24,11 @@ const Header = ({ type }) => {
   const [date, setDate] = useState(new Date());
   const [destinations, setDestinations] = useState([]);
   const [startCities, setStartCities] = useState([]);
-
   const [buses, setBuses] = useState([]);
 
   React.useEffect(() => {
     const getStartAndDestinations = async () => {
       const { data } = await axios.get(`http://localhost:8800/api/bus/cities`);
-      console.log(data);
       setDestinations(data.destinations);
       setStartCities(data.startcities);
     };
@@ -38,25 +36,32 @@ const Header = ({ type }) => {
   }, []);
 
   React.useEffect(() => {
-    console.log(sourceCity);
     const fetchBus = async () => {
       const buses = await axios.get(
         `http://localhost:8800/api/bus/buses?startCity=${
           sourceCity || ""
         }&destinationCity=${destinationCity || ""}`
       );
-      console.log(buses);
       setBuses(buses.data);
     };
-    // setBuses(buses)
     fetchBus();
   }, [sourceCity, destinationCity]);
+
   const navigate = useNavigate();
+
   const handleSearch = () => {
     if (sourceCity && destinationCity) {
       navigate("/bus", { state: { sourceCity, destinationCity, date } });
     } else {
       alert("Please enter both source and destination cities.");
+    }
+  };
+
+  const handleDateChange = (newDate) => {
+    // Prevent selecting a previous date
+    const currentDate = new Date();
+    if (newDate >= currentDate) {
+      setDate(newDate);
     }
   };
 
@@ -87,22 +92,10 @@ const Header = ({ type }) => {
                     selected={sourceCity}
                   />
                 </Form.Group>
-
-                {/* <input
-                  type="text"
-                  placeholder="Source City"
-                  className="headerSearchInput"
-                  onChange={(e) => setSourceCity(e.target.value)}
-                /> */}
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faLocationDot} className="headerIcon" />
-                {/* <input
-                  type="text"
-                  placeholder="Destination City"
-                  className="headerSearchInput"
-                  onChange={(e) => setDestinationCity(e.target.value)}
-                /> */}
+
                 <Form.Group>
                   <Typeahead
                     id="basic-typeahead-single"
@@ -119,10 +112,17 @@ const Header = ({ type }) => {
                 <span
                   onClick={() => setOpenDate(!openDate)}
                   className="headerSearchText"
-                >{`${format(date, "MM/dd/yyyy")}`}</span>
+                >
+                  {`${format(date, "MM/dd/yyyy")}`}
+                </span>
 
                 {openDate && (
-                  <Calendar onChange={setDate} value={date} className="date" />
+                  <Calendar
+                    onChange={handleDateChange}
+                    value={date}
+                    className="date"
+                    minDate={new Date()} // Prevent selecting a previous date
+                  />
                 )}
               </div>
               <div className="headerSearchItem">
@@ -137,20 +137,22 @@ const Header = ({ type }) => {
             </div>
           </div>
         )}
-        <div>
-          {buses.length > 0 &&
-            buses.map((bus) => {
-              return (
-                <div key={bus.id}>
-                  <p>{bus.name}</p>
-                  {/* <p>{bus.busNumber}</p> */}
-                </div>
-              );
-            })}
-        </div>
       </div>
     </div>
   );
 };
 
 export default Header;
+
+{
+  /* <div>
+          {buses.length > 0 &&
+            buses.map((bus) => {
+              return (
+                <div key={bus.id}>
+                  <p>{bus.name}</p>
+                </div>
+              );
+            })}
+        </div> */
+}

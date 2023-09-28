@@ -7,10 +7,13 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import * as moment from "moment-timezone";
-// import { PDFDownloadLink, Page, Text, Document, StyleSheet } from "@react-pdf/renderer";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+import { useNavigate } from "react-router-dom";
 
 const Book = () => {
   const { user } = React.useContext(AuthContext);
+  const navigate = useNavigate();
   const [bookingDetails, setBookingDetails] = React.useState({
     name: "",
     email: "",
@@ -30,30 +33,63 @@ const Book = () => {
     }
   }, [user]);
 
-  const bookBus = async (e) => {
-    e.preventDefault();
-    const response = await axios.post("http://localhost:8800/api/book", {
-      userId: user._id,
-      busId: busDetails._id,
-      boardingPoint: bookingDetails.boardingPoint,
-      nameOfPassenger: bookingDetails.name,
-      email: bookingDetails.email,
-      phonenumber: bookingDetails.phone,
-      seats: busDetails?.selectedSeats,
-      price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
-      date: busDetails?.departureDate,
-      time: busDetails?.time,
-      name:busDetails?.name,
-      destinationCity:busDetails?.destinationCity,
-      startCity:busDetails?.startCity,
+  const confirmBooking = () => {
+    Swal.fire({
+      icon: "question",
+      title: "Confirm Booking",
+      text: "Are you sure you want to book?",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Book it!",
+      cancelButtonText: "No, Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        bookBus();
+      }
     });
   };
-  const getBook = async () => {
-    const response = await axios.post(
-      "http://localhost:8800/api/book/getBook",
-      {}
-    );
+
+  const bookBus = async () => {
+    try {
+      const response = await axios.post("http://localhost:8800/api/book", {
+        userId: user._id,
+        busId: busDetails._id,
+        boardingPoint: bookingDetails.boardingPoint,
+        nameOfPassenger: bookingDetails.name,
+        email: bookingDetails.email,
+        phonenumber: bookingDetails.phone,
+        seats: busDetails?.selectedSeats,
+        price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
+        date: busDetails?.departureDate,
+        time: busDetails?.time,
+        name: busDetails?.name,
+        destinationCity: busDetails?.destinationCity,
+        startCity: busDetails?.startCity,
+      });
+
+      // If booking is successful, show a success SweetAlert2
+      Swal.fire({
+        icon: "success",
+        title: "Booking Successful!",
+        text: "Your booking has been successfully completed.",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/");
+          // Optionally, you can redirect the user to another page or perform any other actions here.
+        }
+      });
+    } catch (error) {
+      // Handle booking errors here
+      console.error("Booking failed:", error);
+
+      // Show an error SweetAlert2 if booking fails
+      Swal.fire({
+        icon: "error",
+        title: "Booking Failed",
+        text: "Booking failed. Please try again later.",
+      });
+    }
   };
+
   return (
     <div>
       <NavBar />
@@ -116,7 +152,7 @@ const Book = () => {
                   ))}
               </Form.Select>
             </div>
-            <button onClick={(e) => bookBus(e)}>Proceed to Confirmation</button>
+            <button onClick={confirmBooking}>Proceed to Confirmation</button>
           </div>
           <div className="details">
             <div className="traveldetails">

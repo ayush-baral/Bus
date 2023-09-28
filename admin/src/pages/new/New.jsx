@@ -5,19 +5,36 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [info, setInfo] = useState([]);
-  const [successMessage, setSuccessMessage] = useState(""); // Track success message
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleClick = async (e) => {
-    e.preventDefault();
+  const handleAddConfirmation = () => {
+    // Show a confirmation SweetAlert2 before adding a new user
+    Swal.fire({
+      title: "Confirm Add User",
+      text: "Are you sure you want to add this user?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Add User",
+      cancelButtonText: "No, Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed the add, proceed with the add action
+        handleAddUser();
+      }
+    });
+  };
+
+  const handleAddUser = async () => {
     const data = new FormData();
     data.append("file", file);
     data.append("upload_preset", "project"); // Replace with your actual upload preset name
@@ -41,11 +58,26 @@ const New = ({ inputs, title }) => {
 
       await axios.post("/auth/register", newUser);
 
-      setSuccessMessage("User created successfully!"); // Set success message
-      navigate("/users");
+      // Show a success SweetAlert2 when the user is added successfully
+      Swal.fire({
+        icon: "success",
+        title: "User Added",
+        text: "The user has been added successfully.",
+      }).then(() => {
+        // Clear the form and file input after success
+        setFile("");
+        setInfo({});
+        navigate("/users");
+      });
     } catch (err) {
       console.log(err);
       // Handle error case
+      // Show an error SweetAlert2 if the user addition fails
+      Swal.fire({
+        icon: "error",
+        title: "Add User Failed",
+        text: "User addition failed. Please try again later.",
+      });
     }
   };
 
@@ -93,8 +125,9 @@ const New = ({ inputs, title }) => {
                   />
                 </div>
               ))}
-              <button onClick={handleClick}>Send</button>
-              {successMessage && <p>{successMessage}</p>}
+              <button type="button" onClick={handleAddConfirmation}>
+                Send
+              </button>
             </form>
           </div>
         </div>

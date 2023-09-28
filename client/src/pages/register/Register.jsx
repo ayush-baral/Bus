@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navbar/Navbar";
 import "./register.css";
 import Footer from "../../components/footer/Footer";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 const Register = () => {
   const [credentials, setCredentials] = useState({
@@ -25,25 +27,77 @@ const Register = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "REGISTER_START" });
+  
+    if (
+      !credentials.username ||
+      !credentials.email ||
+      !credentials.password ||
+      !credentials.phone
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Fill in All Fields",
+        text: "Please fill in all fields.",
+      });
+      return;
+    }
+  
     try {
-      const res = await axios.post("auth/register", credentials);
-      dispatch({ type: "REGISTER_SUCCESS", payload: res.data.details });
-      setRegistrationStatus("success"); // Set registration status to success
-      navigate("/login");
+      const res = await axios.post("/auth/register", credentials);
+  
+      if (res.data.error) {
+        if (res.data.error.includes("Username is not unique.")) {
+          Swal.fire({
+            icon: "error",
+            title: "Username Not Unique",
+            text: "Username is not unique.",
+          });
+        } else if (res.data.error.includes("Email is not unique.")) {
+          Swal.fire({
+            icon: "error",
+            title: "Email Not Unique",
+            text: "Email is not unique.",
+          });
+        } else {
+          dispatch({ type: "REGISTER_FAILURE", payload: res.data.error });
+          Swal.fire({
+            icon: "error",
+            title: "Registration Failed",
+            text: "Registration failed. Please try again.",
+          });
+        }
+      } else {
+        dispatch({ type: "REGISTER_SUCCESS", payload: res.data.details });
+  
+        // Display success SweetAlert2 dialog
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful",
+          text: "Registration successful!",
+        });
+  
+        navigate("/login");
+      }
     } catch (err) {
       dispatch({ type: "REGISTER_FAILURE", payload: err.response.data });
-      setRegistrationStatus("error"); // Set registration status to error
+  
+      // Display error SweetAlert2 dialog
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: "Registration failed. Please try again.",
+      });
     }
   };
-
+  
   useEffect(() => {
     let timer;
     if (registrationStatus === "error") {
       timer = setTimeout(() => {
-        setRegistrationStatus(null); // Clear the registration status message after 3 seconds
+        setRegistrationStatus(null);
       }, 3000);
     }
-    return () => clearTimeout(timer); // Clear the timer when the component unmounts
+    return () => clearTimeout(timer);
   }, [registrationStatus]);
 
   return (
@@ -86,12 +140,6 @@ const Register = () => {
           <button disabled={loading} onClick={handleClick} className="rButton">
             Register
           </button>
-          {registrationStatus === "success" && (
-            <span>Registration successful!</span>
-          )}
-          {registrationStatus === "error" && (
-            <span>Registration failed. Please try again.</span>
-          )}
         </div>
       </div>
       <Footer />

@@ -9,18 +9,41 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-    if (confirmLogout) {
-      // Perform any logout logic here if necessary
-      navigate("/login");
-    }
+    // Display a confirmation dialog using SweetAlert2
+    Swal.fire({
+      icon: "question",
+      title: "Confirm Logout",
+      text: "Are you sure you want to logout?",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Logout",
+      cancelButtonText: "No, Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Perform any logout logic here if necessary
+        // For demonstration purposes, simulate a logout delay
+        setTimeout(() => {
+          // Display a success message
+          Swal.fire({
+            icon: "success",
+            title: "Logout Successful",
+            text: "You have been successfully logged out.",
+          });
+  
+          // Redirect to the login page
+          navigate("/login");
+        }, 1500); // Adjust the delay time as needed
+      }
+    });
   };
+  
 
   return (
     <div className="sidebar">
