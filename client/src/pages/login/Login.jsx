@@ -31,16 +31,24 @@ const Login = (props) => {
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post("auth/login", credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      if (!res.data.isAdmin) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
 
-      // Display success SweetAlert2 dialog
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful",
-        showConfirmButton: false,
-        timer: 2000, // Auto close after 1.5 seconds
-      });
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "You have successfully logged in",
+        });
 
+        navigate("/");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: "You are not allowed to log in.",
+        });
+        dispatch({ type: "LOGIN_FAILURE", payload: null });
+      }
       if (busId) {
         navigate(`/bus/${busId}?selectedSeats=${selectedSeats}&date=${date}`);
       } else {

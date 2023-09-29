@@ -31,6 +31,26 @@ export const userColumns = [
 ];
 export const busColumns = [
   // { field: "_id", headerName: "ID", width: 250 },
+  // {
+  //   field: "bus",
+  //   headerName: "Bus",
+  //   width: 230,
+  //   renderCell: (params) => {
+  //     return (
+  //       <div className="cellWithImg">
+  //         {params.row.photos.map((photoUrl, index) => (
+  //           <img
+  //             key={index}
+  //             className="cellImg"
+  //             src={photoUrl || "https://i.ibb.co/MBtjqXQ/no-avatar.gif"}
+  //             alt={`Photo ${index + 1}`}
+  //           />
+  //         ))}
+  //       </div>
+  //     );
+  //   },
+  // },
+
   {
     field: "name",
     headerName: "Name",
