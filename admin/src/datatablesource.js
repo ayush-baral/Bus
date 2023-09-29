@@ -95,7 +95,7 @@ export const busColumns = [
   {
     field: "date",
     headerName: "Date",
-    width: 100,
+    width: 200,
   },
   {
     field: "unavailble date",

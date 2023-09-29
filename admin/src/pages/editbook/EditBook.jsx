@@ -27,14 +27,13 @@ const EditBus = () => {
         setIsLoading(false);
       });
   }, []);
-  
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
   const handleEditConfirmation = () => {
-    // Show a confirmation SweetAlert2 before proceeding with the edit
     Swal.fire({
       title: "Confirm Edit",
       text: "Are you sure you want to edit this book data?",
@@ -44,19 +43,18 @@ const EditBus = () => {
       cancelButtonText: "No, Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        // User confirmed the edit, proceed with the edit action
         handleEdit();
       }
     });
   };
- 
+
   const handleEdit = () => {
     axios
       .put(`http://localhost:8800/api/book/${id}`, formData)
       .then((result) => {
         console.log(result);
         navigate("/book");
-        // Show a success SweetAlert2 when the edit is successful
+
         Swal.fire({
           icon: "success",
           title: "Bookings Updated",
@@ -65,7 +63,7 @@ const EditBus = () => {
       })
       .catch((err) => {
         console.log("Error Updating the data ", err);
-        // Show an error SweetAlert2 if the edit fails
+
         Swal.fire({
           icon: "error",
           title: "Update Failed",
