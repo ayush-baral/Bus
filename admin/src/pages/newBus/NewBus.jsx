@@ -19,7 +19,6 @@ const NewBus = () => {
   };
 
   const handleAddConfirmation = () => {
-    // Show a confirmation SweetAlert2 before adding a new bus
     Swal.fire({
       title: "Confirm Add Bus",
       text: "Are you sure you want to add this bus?",
@@ -29,7 +28,6 @@ const NewBus = () => {
       cancelButtonText: "No, Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        // User confirmed the add, proceed with the add action
         handleAddBus();
       }
     });
@@ -60,20 +58,18 @@ const NewBus = () => {
 
       await axios.post("/bus", newBus);
 
-      // Show a success SweetAlert2 when the bus is added successfully
       Swal.fire({
         icon: "success",
         title: "Bus Added",
         text: "The bus has been added successfully.",
       }).then(() => {
-        // Clear the form and file input after success
         setFiles([]);
         setInfo({});
         navigate("/bus");
       });
     } catch (error) {
       console.error("Error:", error);
-      // Show an error SweetAlert2 if the bus addition fails
+
       Swal.fire({
         icon: "error",
         title: "Add Bus Failed",

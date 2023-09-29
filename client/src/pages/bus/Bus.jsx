@@ -12,7 +12,7 @@ const BusSeatSelection = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate = useNavigate();
   const user = useContext(AuthContext);
-
+  const [totalSeats, setTotalSeats] = useState(0);
   const handleSeatClick = (seatNumber) => {
     if (bookedSeats.includes(seatNumber)) {
       return;
@@ -108,6 +108,9 @@ const BusSeatSelection = () => {
     const getBus = async () => {
       const bus = await axios.get(`http://localhost:8800/api/bus/find/${id}`);
       setBus(bus.data);
+      if (bus.totalSeats) {
+        setTotalSeats(bus.totalSeats);
+      }
     };
     if (id) {
       getBus();

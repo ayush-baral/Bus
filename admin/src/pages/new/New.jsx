@@ -54,25 +54,19 @@ const New = ({ inputs, title }) => {
         img: url,
       };
 
-      // console.log("New User:", newUser);
-
       await axios.post("/auth/register", newUser);
 
-      // Show a success SweetAlert2 when the user is added successfully
       Swal.fire({
         icon: "success",
         title: "User Added",
         text: "The user has been added successfully.",
       }).then(() => {
-        // Clear the form and file input after success
         setFile("");
         setInfo({});
         navigate("/users");
       });
     } catch (err) {
       console.log(err);
-      // Handle error case
-      // Show an error SweetAlert2 if the user addition fails
       Swal.fire({
         icon: "error",
         title: "Add User Failed",
