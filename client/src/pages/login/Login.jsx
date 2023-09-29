@@ -38,7 +38,7 @@ const Login = (props) => {
         icon: "success",
         title: "Login Successful",
         showConfirmButton: false,
-        timer: 1500, // Auto close after 1.5 seconds
+        timer: 2000, // Auto close after 1.5 seconds
       });
 
       if (busId) {

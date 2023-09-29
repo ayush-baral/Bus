@@ -35,7 +35,6 @@ const EditBus = () => {
   };
 
   const handleEditConfirmation = () => {
-    // Show a confirmation SweetAlert2 before proceeding with the edit
     Swal.fire({
       title: "Confirm Edit",
       text: "Are you sure you want to edit this bus data?",
@@ -45,7 +44,6 @@ const EditBus = () => {
       cancelButtonText: "No, Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        // User confirmed the edit, proceed with the edit action
         handleEdit();
       }
     });
@@ -57,7 +55,7 @@ const EditBus = () => {
       .then((result) => {
         console.log(result);
         navigate("/bus");
-        // Show a success SweetAlert2 when the edit is successful
+
         Swal.fire({
           icon: "success",
           title: "Bus Updated",
@@ -66,7 +64,7 @@ const EditBus = () => {
       })
       .catch((err) => {
         console.log("Error Updating the data ", err);
-        // Show an error SweetAlert2 if the edit fails
+
         Swal.fire({
           icon: "error",
           title: "Update Failed",

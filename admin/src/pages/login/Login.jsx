@@ -31,7 +31,6 @@ const Login = (props) => {
       const res = await axios.post("auth/login", credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
 
-      // Display a success message using SweetAlert2
       Swal.fire({
         icon: "success",
         title: "Login Successful",

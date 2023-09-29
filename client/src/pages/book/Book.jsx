@@ -66,7 +66,6 @@ const Book = () => {
         startCity: busDetails?.startCity,
       });
 
-      // If booking is successful, show a success SweetAlert2
       Swal.fire({
         icon: "success",
         title: "Booking Successful!",
@@ -74,14 +73,11 @@ const Book = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/");
-          // Optionally, you can redirect the user to another page or perform any other actions here.
         }
       });
     } catch (error) {
-      // Handle booking errors here
       console.error("Booking failed:", error);
 
-      // Show an error SweetAlert2 if booking fails
       Swal.fire({
         icon: "error",
         title: "Booking Failed",

@@ -27,7 +27,7 @@ const Register = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "REGISTER_START" });
-  
+
     if (
       !credentials.username ||
       !credentials.email ||
@@ -41,10 +41,10 @@ const Register = () => {
       });
       return;
     }
-  
+
     try {
       const res = await axios.post("/auth/register", credentials);
-  
+
       if (res.data.error) {
         if (res.data.error.includes("Username is not unique.")) {
           Swal.fire({
@@ -68,20 +68,18 @@ const Register = () => {
         }
       } else {
         dispatch({ type: "REGISTER_SUCCESS", payload: res.data.details });
-  
-        // Display success SweetAlert2 dialog
+
         Swal.fire({
           icon: "success",
           title: "Registration Successful",
           text: "Registration successful!",
         });
-  
+
         navigate("/login");
       }
     } catch (err) {
       dispatch({ type: "REGISTER_FAILURE", payload: err.response.data });
-  
-      // Display error SweetAlert2 dialog
+
       Swal.fire({
         icon: "error",
         title: "Registration Failed",
@@ -89,7 +87,7 @@ const Register = () => {
       });
     }
   };
-  
+
   useEffect(() => {
     let timer;
     if (registrationStatus === "error") {

@@ -28,7 +28,6 @@ const New = ({ inputs, title }) => {
       cancelButtonText: "No, Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        // User confirmed the add, proceed with the add action
         handleAddUser();
       }
     });
