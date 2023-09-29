@@ -3,8 +3,6 @@ import axios from "axios";
 import { AuthContext } from "../../context/Authcontext";
 import { useNavigate, useParams } from "react-router-dom";
 import "./login.scss";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 
@@ -48,8 +46,11 @@ const Login = (props) => {
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
 
-      // Display error toast
-      toast.error("Login failed. Please try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: "Login failed. Please try again.",
+      });
     }
   };
 
@@ -88,7 +89,6 @@ const Login = (props) => {
           </button>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };
