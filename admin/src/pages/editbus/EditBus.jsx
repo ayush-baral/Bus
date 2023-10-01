@@ -31,6 +31,9 @@ const EditBus = () => {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
+    if (id === "unavailableDates") {
+      setFormData({ ...formData, [id]: [value] });
+    }
     setFormData({ ...formData, [id]: value });
   };
 

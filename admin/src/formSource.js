@@ -230,7 +230,7 @@ export const editbusInputs = [
     type: "date",
   },
   {
-    id: "unavailable date",
+    id: "unavailableDates",
     label: "Unavailable Date",
     type: "text",
   },

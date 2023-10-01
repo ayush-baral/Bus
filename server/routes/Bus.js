@@ -20,7 +20,7 @@ router.post("/", verifyAdmin, createBus);
 
 //update
 // router.put("/:id", verifyAdmin, updateBus);
-router.put("/:id",  updateBus);
+router.put("/:id", updateBus);
 //delete
 router.delete("/:id", verifyAdmin, deleteBus);
 
@@ -30,6 +30,5 @@ router.get("/find/:id", getBus);
 router.get("/", getallBus);
 router.get("/buses", getBusesFromTo);
 router.get("/cities", getCities);
-
 
 export default router;

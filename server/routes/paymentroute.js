@@ -7,16 +7,20 @@ const router = express.Router();
 dotenv.config();
 
 router.post("/khalti", async (req, res) => {
-  const payload = req.body;
+  const { token, amount } = req.body;
   const khaltiresponse = await axios.post(
-    "https://a.khalti.com/api/v2/epayment/initiate/",
-    payload,
+    "https://khalti.com/api/v2/payment/verify/",
+    {
+      token,
+      amount,
+    },
     {
       headers: {
-        Authorization: `key ${process.env.KHALTI_SECRET_KEY}`,
+        Authorization: `Key test_secret_key_178a4691eca34077a0d47daf52ed0701`,
       },
     }
   );
+  console.log(khaltiresponse);
   if (khaltiresponse) {
     res.json({
       success: true,

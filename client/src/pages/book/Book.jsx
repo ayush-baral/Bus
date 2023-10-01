@@ -10,6 +10,7 @@ import * as moment from "moment-timezone";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { useNavigate } from "react-router-dom";
+import KhaltiCheckout from "khalti-checkout-web";
 
 const Book = () => {
   const { user } = React.useContext(AuthContext);
@@ -22,6 +23,90 @@ const Book = () => {
   });
   const location = useLocation();
   const busDetails = location.state;
+
+  let config = {
+    // replace this key with yours
+    publicKey: "test_public_key_6d9531be1c0e48bca2afc46e4918b2d2",
+    productIdentity: busDetails._id,
+    productName: busDetails?.selectedSeats?.toString(),
+    productUrl: "http://google.com",
+    eventHandler: {
+      async onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        try {
+          const response = await axios.post(
+            "http://localhost:8800/api/payment/khalti",
+            {
+              token: payload.token,
+              amount: payload.amount,
+            }
+          );
+          if (response.data.success) {
+            const response = await axios.post(
+              "http://localhost:8800/api/book",
+              {
+                userId: user._id,
+                busId: busDetails._id,
+                boardingPoint: bookingDetails.boardingPoint,
+                nameOfPassenger: bookingDetails.name,
+                email: bookingDetails.email,
+                phonenumber: bookingDetails.phone,
+                seats: busDetails?.selectedSeats,
+                price:
+                  busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
+                date: busDetails?.departureDate,
+                time: busDetails?.time,
+                name: busDetails?.name,
+              }
+            );
+            console.log(response.data);
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Booking Failed",
+              text: "Failed to verify payment. Please try again later.",
+            });
+          }
+          Swal.fire({
+            icon: "success",
+            title: "Booking Successful!",
+            text: "Your booking has been successfully completed.",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/booking");
+            }
+          });
+        } catch (error) {
+          console.error("Booking failed:", error);
+
+          Swal.fire({
+            icon: "error",
+            title: "Booking Failed",
+            text: "Booking failed. Please try again later.",
+          });
+        }
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error);
+      },
+      onClose() {
+        console.log("widget is closing");
+      },
+    },
+    paymentPreference: [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+  };
+
+  let checkout = new KhaltiCheckout(config);
+  // let btn = document.getElementById("payment-button");
+
   React.useEffect(() => {
     if (user) {
       setBookingDetails({
@@ -46,44 +131,62 @@ const Book = () => {
         bookBus();
       }
     });
+    // const response = await axios.post("http://localhost:8800/api/book", {
+    //   userId: user._id,
+    //   busId: busDetails._id,
+    //   boardingPoint: bookingDetails.boardingPoint,
+    //   nameOfPassenger: bookingDetails.name,
+    //   email: bookingDetails.email,
+    //   phonenumber: bookingDetails.phone,
+    //   seats: busDetails?.selectedSeats,
+    //   price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
+    //   date: busDetails?.departureDate,
+    //   time: busDetails?.time,
+    //   name:busDetails?.name,
+    // });
   };
 
   const bookBus = async () => {
-    try {
-      const response = await axios.post("http://localhost:8800/api/book", {
-        userId: user._id,
-        busId: busDetails._id,
-        boardingPoint: bookingDetails.boardingPoint,
-        nameOfPassenger: bookingDetails.name,
-        email: bookingDetails.email,
-        phonenumber: bookingDetails.phone,
-        seats: busDetails?.selectedSeats,
-        price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
-        date: busDetails?.departureDate,
-        time: busDetails?.time,
-        name: busDetails?.name,
-        destinationCity: busDetails?.destinationCity,
-        startCity: busDetails?.startCity,
-      });
+    // e.preventDefault();
+    checkout.show({
+      amount:
+        busDetails?.selectedSeats?.length * busDetails?.pricePerSeat * 100,
+    });
+    // try {
+    //   const response = await axios.post("http://localhost:8800/api/book", {
+    //     userId: user._id,
+    //     busId: busDetails._id,
+    //     boardingPoint: bookingDetails.boardingPoint,
+    //     nameOfPassenger: bookingDetails.name,
+    //     email: bookingDetails.email,
+    //     phonenumber: bookingDetails.phone,
+    //     seats: busDetails?.selectedSeats,
+    //     price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
+    //     date: busDetails?.departureDate,
+    //     time: busDetails?.time,
+    //     name: busDetails?.name,
+    //     destinationCity: busDetails?.destinationCity,
+    //     startCity: busDetails?.startCity,
+    //   });
 
-      Swal.fire({
-        icon: "success",
-        title: "Booking Successful!",
-        text: "Your booking has been successfully completed.",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/");
-        }
-      });
-    } catch (error) {
-      console.error("Booking failed:", error);
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "Booking Successful!",
+    //     text: "Your booking has been successfully completed.",
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       navigate("/");
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.error("Booking failed:", error);
 
-      Swal.fire({
-        icon: "error",
-        title: "Booking Failed",
-        text: "Booking failed. Please try again later.",
-      });
-    }
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Booking Failed",
+    //     text: "Booking failed. Please try again later.",
+    //   });
+    // }
   };
 
   return (
