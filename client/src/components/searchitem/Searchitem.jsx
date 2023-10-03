@@ -73,23 +73,15 @@ const Searchitem = ({ item }) => {
           onClick={() => openModal(photo, index)}
         />
       ))}
-      <div className="sDesc">
-        <p>{item.name}</p>
-      </div>
-      <div className="sType">
-        <p>{item.busType}</p>
-      </div>
-      <div>
-        <p>{item.time}</p>
-      </div>
-      <div className="sDeparture">
-        <p>{item.startCity}</p>
-      </div>
-      <div className="sFeature">
-        <p>{item.destinationCity}</p>
-      </div>
-      <div>
-        <p>{item.pricePerSeat}</p>
+      <div className="sDetails">
+        <ul className="detailsList">
+          <li className="sDesc">Name: {item.name}</li>
+          <li className="sType">Type: {item.busType}</li>
+          <li className="sDeparture">Departure City: {item.startCity}</li>
+          <li className="sFeature">Destination City: {item.destinationCity}</li>
+          <li className="sTime">Time: {item.time}</li>
+          <li className="sPrice">Price: Rs.{item.pricePerSeat}</li>
+        </ul>
       </div>
       <Link
         to={`/bus/${item._id}?date=${parseDate(
