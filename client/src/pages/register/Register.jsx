@@ -16,12 +16,19 @@ const Register = () => {
     phone: "",
   });
   const [registrationStatus, setRegistrationStatus] = useState(null); // Track registration status
-
+  const [selectedFile, setSelectedFile] = useState(null); // Track selected profile picture
   const { loading, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+  const handleUploadClick = () => {
+    document.getElementById("photo").click();
   };
 
   const handleClick = async (e) => {
@@ -103,6 +110,32 @@ const Register = () => {
       <NavBar />
       <div className="register">
         <div className="rContainer">
+        <h2 className="logins">Register</h2>
+        <div className="profile-picture-container">
+            {/* Circular profile picture button with camera icon */}
+            <div
+              className="profile-picture"
+              onClick={handleUploadClick}
+            >
+              {selectedFile ? (
+                <img
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Profile Preview"
+                  className="profile-image"
+                />
+              ) : (
+                <i className="fas fa-camera"></i>
+              )}
+            </div>
+            {/* Hidden file input */}
+            <input
+              type="file"
+              accept="image/*" // Accept only image files
+              id="photo"
+              onChange={handleFileChange}
+              className="profile-picture-input"
+            />
+          </div>
           <input
             type="text"
             placeholder="username"

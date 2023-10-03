@@ -4,8 +4,7 @@ import Home from "./pages/home/Home";
 import List from "./pages/list/List";
 import Bus from "./pages/bus/Bus";
 import Login from "./pages/login/Login";
-import About from "./pages/About";
-import Contact from "./pages/contact/Contact";
+import About from "./pages/about/About";
 import Register from "./pages/register/Register";
 import Book from "./pages/book/Book";
 import Profile from "./pages/Profile/Profile";
@@ -21,7 +20,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/booking" element={<BookingPage />} />
       </Routes>

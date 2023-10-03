@@ -8,17 +8,17 @@ const Toptravelled = () => {
     {
       name: "mustang",
       image:
-        "https://media.gettyimages.com/id/587373013/photo/tetang-village-from-above.jpg?s=1024x1024&w=gi&k=20&c=W0eWPrziJbuGzIaDwOSNgM8vNKvw9BBR2p71H_4cs14=",
+        "Mustang.jpeg",
     },
     {
       name: "pokhara",
       image:
-        "https://media.gettyimages.com/id/641959716/photo/ghandruk-village.jpg?s=1024x1024&w=gi&k=20&c=Y3fUMVcte9oZic_OMZXctvVI35qPC2lkEG-iMiHG_qg=",
+        "Pokhara.jpeg",
     },
     {
       name: "kathmandu",
       image:
-        "https://media.gettyimages.com/id/637030542/photo/kathmandu-crowds-of-people-outside-temples-patan-durbar-square-nepal.jpg?s=1024x1024&w=gi&k=20&c=qolAwXltMkVXAhD6-xsR-dzJXHarwx-BcCf0TX31EP0=",
+        "Kathmandu.jpeg",
     },
   ];
 
@@ -41,7 +41,6 @@ const Toptravelled = () => {
             >
               <img src={place.image} alt="" className="toptravelledImg" />
               <div className="toptravelledTitles">
-                <h1>Buses To</h1>
                 <h2>{place.name.toUpperCase()}</h2>
               </div>
             </div>

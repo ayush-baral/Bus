@@ -6,7 +6,7 @@ const Footer = () => {
     <div className="footer">
       <h4 className="text-center">All rights reserved &copy; Hamro Bus</h4>
       <p className="text-center mt-3">
-        <Link to="/about">About</Link>|<Link to="/contact">Contact</Link>
+        <Link to="/about">About</Link>
       </p>
     </div>
   );

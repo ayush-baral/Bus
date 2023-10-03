@@ -95,3 +95,21 @@ h2 {
 {
   background-color: rgb(200, 35, 35);
 }
+/* ... (previous styles) */
+
+.seat.available {
+  background-color: #4caf50; /* Green for available seats */
+  color: white;
+}
+
+.seat.unavailable {
+  background-color: black; /* Black for unavailable seats */
+  color: white;
+}
+
+.seat.selected {
+  background-color: #f40a0a; /* Red for selected seats */
+  color: white;
+}
+
+/* ... (rest of the styles) */

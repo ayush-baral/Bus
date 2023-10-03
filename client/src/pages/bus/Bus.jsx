@@ -73,21 +73,25 @@ const BusSeatSelection = () => {
 
   const renderSeats = (startRow, endRow) => {
     const seats = [];
+    let seatNumber = 1;
     for (let row = startRow; row <= endRow; row++) {
       const rowSeats = [];
-      for (let seatNumber = 1; seatNumber <= 2; seatNumber++) {
-        const seatId = `${row}-${seatNumber}`;
+      for (let seatNumberInRow = 1; seatNumberInRow <= 2; seatNumberInRow++) {
+        const seatId = `${row}-${seatNumberInRow}`;
         const isSelected = selectedSeats.includes(seatId);
         const isBooked = bookedSeats.includes(seatId);
+        const isAvailable = !isBooked;
+
         rowSeats.push(
           <div
             key={seatId}
-            className={`seat ${isSelected || isBooked ? "selected" : ""}`} // change color
+            className={`seat ${isSelected ? "selected" : (isAvailable ? "available" : "unavailable")}`}
             onClick={() => handleSeatClick(seatId)}
           >
-            {/* No content */}
+            {isSelected ? "X" : seatNumber}
           </div>
         );
+        seatNumber++;
       }
       seats.push(
         <div key={`row-${row}`} className="seat-row">
@@ -98,6 +102,7 @@ const BusSeatSelection = () => {
 
     return seats;
   };
+
 
   const [bus, setBus] = React.useState(null);
   const [showBoardingPoint, setShowBoradingPoint] = React.useState(false);

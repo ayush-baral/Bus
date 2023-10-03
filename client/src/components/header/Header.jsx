@@ -70,8 +70,9 @@ const Header = ({ type }) => {
       <div className="headerList">
         {type !== "list" && (
           <div>
+             <div className="write">
             <h1>Book your journey now with the bus platform Hamro Bus</h1>
-
+            </div>
             <div className="headerListItem">
               <FontAwesomeIcon icon={faBus} />
             </div>

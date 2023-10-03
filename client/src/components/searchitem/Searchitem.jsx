@@ -74,22 +74,22 @@ const Searchitem = ({ item }) => {
         />
       ))}
       <div className="sDesc">
-        <h1>{item.name}</h1>
+        <p>{item.name}</p>
       </div>
       <div className="sType">
-        <h1>{item.busType}</h1>
+        <p>{item.busType}</p>
       </div>
       <div>
-        <h1>{item.time}</h1>
+        <p>{item.time}</p>
       </div>
       <div className="sDeparture">
-        <h1>{item.startCity}</h1>
+        <p>{item.startCity}</p>
       </div>
       <div className="sFeature">
-        <h1>{item.destinationCity}</h1>
+        <p>{item.destinationCity}</p>
       </div>
       <div>
-        <h1>{item.pricePerSeat}</h1>
+        <p>{item.pricePerSeat}</p>
       </div>
       <Link
         to={`/bus/${item._id}?date=${parseDate(

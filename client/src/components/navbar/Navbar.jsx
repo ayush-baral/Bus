@@ -40,8 +40,7 @@ function NavBar() {
       <nav className="navbar">
         <div className="nav-container">
           <NavLink exact to="/" className="nav-logo">
-            Hamro Bus
-            <i className="fas fa-code"></i>
+            <img src="logo1.jpg" alt="" className="logo" />
           </NavLink>
 
           <ul className={click ? "nav-menu active" : "nav-menu"}>
@@ -56,21 +55,17 @@ function NavBar() {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                exact
-                to="/about"
-                activeClassName="active"
-                className="nav-links"
-                onClick={handleClick}
-              >
-                About
-              </NavLink>
-            </li>
             {user ? (
               <>
                 <li className="nav-item">
-                  <span className="nav-links"> {user.username}</span>
+                  <NavLink to="/profile" className="nav-links">
+                    {user.username}
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/booking" className="nav-links">
+                    View Booking
+                  </NavLink>
                 </li>
                 <li className="nav-item">
                   <button className="nav-logout" onClick={handleLogout}>
@@ -90,7 +85,7 @@ function NavBar() {
                   >
                     Register
                   </NavLink>
-                </li>
+                </li> 
                 <li className="nav-item">
                   <NavLink
                     exact
@@ -104,34 +99,20 @@ function NavBar() {
                 </li>
               </>
             )}
-            <li className="nav-item">
+                <li className="nav-item">
               <NavLink
                 exact
-                to="/contact"
-                activeClassName="active"
+                to="/about"
                 className="nav-links"
                 onClick={handleClick}
               >
-                Contact Us
+                About
               </NavLink>
             </li>
           </ul>
           <div className="nav-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
-          {user && (
-            <div className="menu">
-              <button onClick={toggleDropdown}>
-                <MenuIcon />
-              </button>
-              {isOpen && (
-                <div className="dropdown-content">
-                  <Link to="/profile">Profile</Link>
-                  <Link to="/booking">View Booking</Link>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </nav>
     </>
@@ -139,3 +120,4 @@ function NavBar() {
 }
 
 export default NavBar;
+
