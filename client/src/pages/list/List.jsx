@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import "./list.css";
 import NavBar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
@@ -19,8 +21,8 @@ const List = () => {
     moment(location.state?.date || new Date()).format("DD/MM/YYYY") ||
       moment(new Date()).format("DD/MM/YYYY")
   );
-  console.log(moment(location.state?.date).format("DD/MM/YYYY"))
-  console.log("loc", location.state?.date)
+  console.log(moment(location.state?.date).format("DD/MM/YYYY"));
+  console.log("loc", location.state?.date);
   const [openDate, setOpenDate] = useState(false);
 
   const { data, loading, error, reFetch } = useFetch(
@@ -29,7 +31,6 @@ const List = () => {
   const handleClick = () => {
     reFetch();
   };
-
   return (
     <div id="root">
       <NavBar />
@@ -38,11 +39,11 @@ const List = () => {
         <div className="listWrapper">
           <div className="listsearch">
             <div className="lsItem">
-              <label> Source City</label>
+              <label>Source City</label>
               <input type="text" placeholder={startCity} />
             </div>
             <div className="lsItem">
-              <label> Destination City</label> 
+              <label> Destination City</label>
               <input type="text" placeholder={destinationCity} />
             </div>
             <div className="lsItem">
@@ -52,7 +53,9 @@ const List = () => {
               ).format("DD/MM/YYYY")}`}</span>
               {openDate && (
                 <Calendar
-                  onChange={(date) => setDate(moment(date).format("DD/MM/YYYY"))}
+                  onChange={(date) =>
+                    setDate(moment(date).format("DD/MM/YYYY"))
+                  }
                   minDate={new Date()}
                 />
               )}
@@ -84,94 +87,3 @@ const List = () => {
 };
 
 export default List;
-
-// import React, { useState } from "react";
-// import "./list.css";
-// import NavBar from "../../components/navbar/Navbar";
-// import Header from "../../components/header/Header";
-// import { useLocation } from "react-router-dom";
-// import { format } from "date-fns";
-// import Calendar from "react-calendar";
-// import "react-calendar/dist/Calendar.css";
-// import Searchitem from "../../components/searchitem/Searchitem";
-// import useFetch from "../../hooks/useFetch";
-// import * as moment from "moment-timezone";
-
-// const List = () => {
-//   const location = useLocation();
-//   const [startCity, setStartCity] = useState(location.state?.sourceCity || "");
-//   const [destinationCity, setDestinationCity] = useState(
-//     location.state?.destinationCity || ""
-//   );
-//   const [date, setDate] = useState(
-//     moment(location.state?.date || new Date()).format("DD/MM/YYYY") ||
-//       moment(new Date()).format("DD/MM/YYYY")
-//   );
-//   const [openDate, setOpenDate] = useState(false);
-
-//   const { data, loading, error, reFetch } = useFetch(
-//     `/bus/buses?startCity=${startCity}&destinationCity=${destinationCity}&travelDate=${
-//       date || ""
-//     }`
-//   );
-
-//   console.log(date);
-//   const handleClick = () => {
-//     reFetch();
-//   };
-
-//   return (
-//     <div>
-//       <NavBar />
-//       <Header type="list" />
-//       <div className="listContainer">
-//         <div className="listWrapper">
-//           <div className="listsearch">
-//             <h1 className="lsTitles">Search</h1>
-//             <div className="lsItem">
-//               <label> Source City</label>
-//               <input type="text" placeholder={startCity} />
-//             </div>
-//             <div className="lsItem">
-//               <label> Destination City</label>
-//               <input type="text" placeholder={destinationCity} />
-//             </div>
-//             <div className="lsItem">
-//               <label>Date</label>
-//               <span onClick={() => setOpenDate(!openDate)}>{`${moment(
-//                 date
-//               ).format("DD/MM/YYYY")}`}</span>
-//               {openDate && (
-//                 <Calendar
-//                   onChange={(date) => setDate(date)}
-//                   minDate={new Date()}
-//                 />
-//               )}
-//             </div>
-//             <button onClick={handleClick}>Search</button>
-//           </div>
-//           <div className="listresult">
-//             {loading ? (
-//               "Loading..."
-//             ) : (
-//               <>
-//                 {data.length > 0 ? (
-//                   data.map((item) => (
-//                     <Searchitem
-//                       item={{ ...item, departureDate: date }}
-//                       key={item._id}
-//                     />
-//                   ))
-//                 ) : (
-//                   <p>No buses found</p>
-//                 )}
-//               </>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default List;

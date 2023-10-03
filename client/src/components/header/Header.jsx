@@ -34,7 +34,7 @@ const Header = ({ type }) => {
     };
     getStartAndDestinations();
   }, []);
-
+ 
   React.useEffect(() => {
     const fetchBus = async () => {
       const buses = await axios.get(

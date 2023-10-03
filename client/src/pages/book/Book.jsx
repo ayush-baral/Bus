@@ -23,7 +23,7 @@ const Book = () => {
   });
   const location = useLocation();
   const busDetails = location.state;
-
+  console.log(busDetails);
   let config = {
     // replace this key with yours
     publicKey: "test_public_key_6d9531be1c0e48bca2afc46e4918b2d2",
@@ -57,6 +57,8 @@ const Book = () => {
                 date: busDetails?.departureDate,
                 time: busDetails?.time,
                 name: busDetails?.name,
+                startCity: busDetails?.startCity,
+                destinationCity: busDetails?.destinationCity,
               }
             );
             console.log(response.data);
@@ -97,10 +99,10 @@ const Book = () => {
     },
     paymentPreference: [
       "KHALTI",
-      "EBANKING",
+      // "EBANKING",
       "MOBILE_BANKING",
-      "CONNECT_IPS",
-      "SCT",
+      // "CONNECT_IPS",
+      // "SCT",
     ],
   };
 
@@ -108,17 +110,23 @@ const Book = () => {
   // let btn = document.getElementById("payment-button");
 
   React.useEffect(() => {
-    if (user) {
+    if (user && busDetails) {
       setBookingDetails({
         ...bookingDetails,
-        name: user.username,
-        email: user.email,
-        phone: user.phone,
+        name: user.username || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        boardingPoint:
+          busDetails?.boardingPoints?.length === 1
+            ? busDetails.boardingPoints[0]
+            : "",
       });
     }
-  }, [user]);
+  }, [user, busDetails]);
 
   const confirmBooking = () => {
+    console.log("Bus Details Boarding Points: ", busDetails?.boardingPoints);
+    console.log("Selected Boarding Point: ", bookingDetails.boardingPoint);
     Swal.fire({
       icon: "question",
       title: "Confirm Booking",
@@ -234,23 +242,31 @@ const Book = () => {
               />
             </div>
             <div className="PassengerItems">
-              <label>Boarding Points</label>
-              {/* <input type="select" value={bookingDetails.boardingPoint} /> */}
-              <Form.Select
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setBookingDetails({
-                    ...bookingDetails,
-                    boardingPoint: e.target.value,
-                  });
-                }}
-              >
-                {busDetails?.boardingPoints.length > 0 &&
-                  busDetails?.boardingPoints.map((bd) => (
-                    <option value={bd}>{bd}</option>
-                  ))}
-              </Form.Select>
+              <label>Boarding Point</label>
+              {busDetails?.boardingPoints &&
+              busDetails.boardingPoints.length === 1 ? (
+                <div>{busDetails.boardingPoints[0]}</div>
+              ) : (
+                <Form.Select
+                  value={bookingDetails.boardingPoint}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setBookingDetails({
+                      ...bookingDetails,
+                      boardingPoint: e.target.value,
+                    });
+                  }}
+                >
+                  {busDetails?.boardingPoints.length > 0 &&
+                    busDetails?.boardingPoints.map((bd) => (
+                      <option key={bd} value={bd}>
+                        {bd}
+                      </option>
+                    ))}
+                </Form.Select>
+              )}
             </div>
+
             <button onClick={confirmBooking}>Proceed to Confirmation</button>
           </div>
           <div className="details">

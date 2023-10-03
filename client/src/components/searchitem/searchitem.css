@@ -10,34 +10,26 @@
   width: 120%;
   margin-left: -100px;
 }
+
 .sImg {
   width: 200px;
   height: 200px;
   object-fit: cover;
 }
-.sDesc {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  /* flex: 2; */
+
+.sDetails {
+  flex: 1;
 }
-.sType {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  /* flex: 2; */
+
+.detailsList {
+  list-style-type: none;
+  padding: 0;
 }
-.sDeparture {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  /* flex: 2; */
+
+.detailsList li {
+  margin-bottom: 10px;
 }
-.sFeature {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+
 .siCheckButton {
   background-color: #0071c2;
   color: white;
@@ -47,6 +39,7 @@
   cursor: pointer;
   border-radius: 5px;
 }
+
 .modal {
   display: block;
   position: fixed;

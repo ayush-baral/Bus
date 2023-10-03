@@ -85,7 +85,13 @@ const BusSeatSelection = () => {
         rowSeats.push(
           <div
             key={seatId}
-            className={`seat ${isSelected ? "selected" : (isAvailable ? "available" : "unavailable")}`}
+            className={`seat ${
+              isSelected
+                ? "selected"
+                : isAvailable
+                ? "available"
+                : "unavailable"
+            }`}
             onClick={() => handleSeatClick(seatId)}
           >
             {isSelected ? "X" : seatNumber}
@@ -102,7 +108,6 @@ const BusSeatSelection = () => {
 
     return seats;
   };
-
 
   const [bus, setBus] = React.useState(null);
   const [showBoardingPoint, setShowBoradingPoint] = React.useState(false);
