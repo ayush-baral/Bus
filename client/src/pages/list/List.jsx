@@ -31,6 +31,20 @@ const List = () => {
   const handleClick = () => {
     reFetch();
   };
+
+
+  const handleStartCity = (e)=>{
+    e.preventDefault()
+    setStartCity(e.target.value||"")
+
+  }
+
+  const handleDestinationCity = (e)=>{
+    e.preventDefault()
+    setDestinationCity(e.target.value||"")
+
+  }
+
   return (
     <div id="root">
       <NavBar />
@@ -40,11 +54,11 @@ const List = () => {
           <div className="listsearch">
             <div className="lsItem">
               <label>Source City</label>
-              <input type="text" placeholder={startCity} />
+              <input type="text" placeholder={startCity} value={startCity} onChange={handleStartCity}/>
             </div>
             <div className="lsItem">
               <label> Destination City</label>
-              <input type="text" placeholder={destinationCity} />
+              <input type="text" placeholder={destinationCity} value={destinationCity} onChange={handleDestinationCity}/>
             </div>
             <div className="lsItem">
               <label>Date</label>

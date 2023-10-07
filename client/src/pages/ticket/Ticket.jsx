@@ -68,7 +68,7 @@ const Ticket = () => {
         <div className="wrapper">
           <div className="ticket-container">
             <h1 className="company-name">
-              <img src="logo2.jpg" alt="" className="logos" />
+              <img src="./../logo2.jpg" alt="" className="logos" />
               HAMRO BUS TICKET BOOKING PVT LTD
             </h1>
             <p className="company-address">MASBAR-7, POKHARA</p>
