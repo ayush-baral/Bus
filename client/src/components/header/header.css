@@ -32,7 +32,7 @@
 
 /* Updated styles for the search input container */
 .headerSearch {
-  height: 30px;
+  height: 48px;
   background-color: white;
   border: 3px solid #febb02;
   display: flex;
@@ -52,11 +52,9 @@
   gap: 10px;
 }
 
-
 .headerSearchInput {
   border: none;
   outline: none;
-
 }
 
 .headerSearchText {
@@ -69,10 +67,9 @@
   top: 51px;
   z-index: 2;
 }
-.write
-{
+.write {
   color: #ffffff;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 30px;
   display: block;
   font-size: 2em;
@@ -82,77 +79,20 @@
   margin-inline-end: 0px;
   font-weight: bold;
 }
-.headerbtn
-{
+.headerbtn {
   height: 45px;
   width: 100px;
-  border-radius: 30px;
   color: #ffffff;
   background-color: #36a5af;
+  border: none;
+  cursor: pointer;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+.form-control {
+  border: none !important;
+  padding: 0 !important;
+}

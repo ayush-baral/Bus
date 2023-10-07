@@ -82,6 +82,7 @@ const Header = ({ type }) => {
                   icon={faLocationDot}
                   headerIcon
                   className="headerIcon"
+                  style={{color:"red"}}
                 />
                 <Form.Group>
                   <Typeahead
@@ -95,7 +96,7 @@ const Header = ({ type }) => {
                 </Form.Group>
               </div>
               <div className="headerSearchItem">
-                <FontAwesomeIcon icon={faLocationDot} className="headerIcon" />
+                <FontAwesomeIcon icon={faLocationDot} className="headerIcon" style={{color:"red"}}/>
 
                 <Form.Group>
                   <Typeahead
@@ -109,7 +110,7 @@ const Header = ({ type }) => {
                 </Form.Group>
               </div>
               <div className="headerSearchItem">
-                <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
+                <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" style={{color:"red"}} />
                 <span
                   onClick={() => setOpenDate(!openDate)}
                   className="headerSearchText"
