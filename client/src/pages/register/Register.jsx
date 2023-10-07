@@ -163,7 +163,7 @@ const Register = () => {
             className="rInput"
           />
           <input
-            type="text"
+            type="email"
             placeholder="email"
             id="email"
             value={credentials.email}
@@ -179,7 +179,7 @@ const Register = () => {
             className="rInput"
           />
           <input
-            type="text"
+            type="number"
             placeholder="phone"
             id="phone"
             value={credentials.phone}
