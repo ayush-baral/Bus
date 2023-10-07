@@ -1,56 +1,49 @@
-.ticket-container
-{
+.ticket-container {
   background: #f3f1c9;
   border-radius: 10px;
   border: 2px solid #222;
   cursor: default;
   padding: 20px;
   width: 720px;
-  height: 400px;
+  min-height: 400px;
+  height: auto;
   margin-left: 150px;
 }
-.logos
-{
+.logos {
   height: 50px;
   width: 120px;
   margin-right: 20px;
 }
-.company-name
-{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: x-large;
-    font-weight: bold;
-    margin-bottom: -10px;
+.company-name {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: x-large;
+  font-weight: bold;
+  margin-bottom: -10px;
 }
-.company-address
-{
-    margin-left: 290px;
-    font-weight: 600;
+.company-address {
+  margin-left: 290px;
+  font-weight: 600;
 }
-.company-ph-no
-{
+.company-ph-no {
   margin-left: 270px;
   font-weight: 500;
   font-size: 15px;
   margin-top: -10px;
 }
-.details1
-{
+.details1 {
   margin-left: 20px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 20px;
 }
-.details2
-{
+.details2 {
   margin-left: 100px;
   padding-right: 50px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 20px;
 }
 
-
-.print-ticket
-{
+.print-ticket {
   margin-left: 450px;
   margin-top: 20px;
   border-radius: 20px;
@@ -59,6 +52,6 @@
 .price {
   font-size: 25px;
   font-weight: 500;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   margin-top: 10px;
 }

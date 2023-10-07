@@ -112,13 +112,13 @@ const BusSeatSelection = () => {
   const [bus, setBus] = React.useState(null);
 
   const { id } = useParams();
-
+  
   React.useEffect(() => {
     const getBus = async () => {
       const bus = await axios.get(`http://localhost:8800/api/bus/find/${id}`);
       setBus(bus.data);
-      if (bus.totalSeats) {
-        setTotalSeats(bus.totalSeats);
+      if (bus.data.totalSeats) {
+        setTotalSeats(bus.data.totalSeats);
       }
     };
     if (id) {
@@ -158,8 +158,8 @@ const BusSeatSelection = () => {
         <div className="bus-seat-selection">
           <h2 className="headers">Select Your Seats</h2>
           <div className="bus-layout">
-            <div className="seat-column">{renderSeats(1, 9)}</div>
-            <div className="seat-column">{renderSeats(10, 18)}</div>
+            <div className="seat-column">{renderSeats(1, totalSeats/2)}</div>
+            <div className="seat-column">{renderSeats((totalSeats/2)+2, totalSeats+1)}</div>
             <div className="selected-seats">
               <p>Selected Seats:{selectedSeats.join(", ")}</p>
               <p>Total Price: Rs {calculateTotalAmount()}</p>
