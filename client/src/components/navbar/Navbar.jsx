@@ -40,7 +40,7 @@ function NavBar() {
       <nav className="navbar">
         <div className="nav-container">
           <NavLink exact to="/" className="nav-logo">
-            <img src="logo1.jpg" alt="" className="logo" />
+            <img src="./../logo1.jpg" alt="" className="logo" />
           </NavLink>
 
           <ul className={click ? "nav-menu active" : "nav-menu"}>
