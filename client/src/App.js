@@ -9,6 +9,8 @@ import Register from "./pages/register/Register";
 import Book from "./pages/book/Book";
 import Profile from "./pages/Profile/Profile";
 import BookingPage from "./pages/Bookings/BookingPage";
+import Ticket from "./pages/ticket/Ticket";
+import VerifyEmail from "./components/verifyemail/VerifyEmail";
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +24,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/booking" element={<BookingPage />} />
+        <Route path="/ticket/:id" element={<Ticket />} />
+        <Route path="/verify/:id" element={<VerifyEmail />} />
       </Routes>
     </BrowserRouter>
   );

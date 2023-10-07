@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import NavBar from "../../components/navbar/Navbar";
-import "./bus.css";
+import "./bus.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/Authcontext";
 import axios from "axios";
@@ -110,7 +110,6 @@ const BusSeatSelection = () => {
   };
 
   const [bus, setBus] = React.useState(null);
-  const [showBoardingPoint, setShowBoradingPoint] = React.useState(false);
 
   const { id } = useParams();
 
@@ -153,17 +152,17 @@ const BusSeatSelection = () => {
     // }
   }, [bookings]);
   return (
-    <div className="contactus">
+    <div className="main">
       <div className="bus-seat-container">
         <NavBar />
         <div className="bus-seat-selection">
-          <h2>Select Your Seats</h2>
+          <h2 className="headers">Select Your Seats</h2>
           <div className="bus-layout">
-            <div className="seat-column">{renderSeats(1, 8)}</div>
-            <div className="seat-column">{renderSeats(9, 16)}</div>
+            <div className="seat-column">{renderSeats(1, 9)}</div>
+            <div className="seat-column">{renderSeats(10, 18)}</div>
             <div className="selected-seats">
-              <h3>Selected Seats:{selectedSeats.join(", ")}</h3>
-              <p>Total Price: Rs{calculateTotalAmount()}</p>
+              <p>Selected Seats:{selectedSeats.join(", ")}</p>
+              <p>Total Price: Rs {calculateTotalAmount()}</p>
               <button onClick={handleClick} className="pButton">
                 Continue booking
               </button>
@@ -173,25 +172,8 @@ const BusSeatSelection = () => {
             <button className="clearButton" onClick={handleClearSelection}>
               Clear Selection
             </button>
-            <button
-              className="BoardingButton"
-              onClick={() => {
-                setShowBoradingPoint(true);
-              }}
-            >
-              Boarding Points
-            </button>
           </div>
         </div>
-        {showBoardingPoint && (
-          <div>
-            {bus?.boardingPoints.length ? (
-              bus.boardingPoints.map((point) => <p>{point}</p>)
-            ) : (
-              <p>No boarding points</p>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

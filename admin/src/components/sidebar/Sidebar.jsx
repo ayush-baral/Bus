@@ -36,20 +36,19 @@ const Sidebar = () => {
             title: "Logout Successful",
             text: "You have been successfully logged out.",
           });
-  
+
           // Redirect to the login page
           navigate("/login");
         }, 1500); // Adjust the delay time as needed
       }
     });
   };
-  
 
   return (
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">HamroBusAdmin</span>
+          <img src="logo1.jpg" alt="" className="logo" />
         </Link>
       </div>
       <hr />
@@ -83,26 +82,12 @@ const Sidebar = () => {
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
           </li> */}
-          <p className="title">USER</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
+          <p className="title">ADMIN</p>
           <li onClick={handleLogout}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
         </ul>
-      </div>
-      <div className="bottom">
-        <div
-          className="colorOption"
-          onClick={() => dispatch({ type: "LIGHT" })}
-        ></div>
-        <div
-          className="colorOption"
-          onClick={() => dispatch({ type: "DARK" })}
-        ></div>
       </div>
     </div>
   );

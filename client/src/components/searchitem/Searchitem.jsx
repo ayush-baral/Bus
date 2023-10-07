@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./searchitem.css";
-import { parse } from "date-fns";
 import * as moment from "moment-timezone";
 
 export function parseDate(dateString) {
@@ -20,35 +19,28 @@ export function parseDate(dateString) {
   }
   return null;
 }
-
 const Searchitem = ({ item }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const openModal = (photo, index) => {
-    setSelectedPhotoIndex(index);
+  const openModal = () => {
+    setSelectedPhotoIndex(0);
     setModalOpen(true);
   };
 
   const closeModal = () => {
-    setSelectedPhotoIndex(0);
     setModalOpen(false);
   };
 
-  const handleModalClose = () => {
-    closeModal();
-    navigate("/bus");
-  };
-
   const handleKeyDown = (event) => {
-    if (event.key === "ArrowLeft" && selectedPhotoIndex > 0) {
-      setSelectedPhotoIndex(selectedPhotoIndex - 1);
-    } else if (
+    if (
       event.key === "ArrowRight" &&
       selectedPhotoIndex < item.photos.length - 1
     ) {
       setSelectedPhotoIndex(selectedPhotoIndex + 1);
+    } else if (event.key === "ArrowLeft" && selectedPhotoIndex > 0) {
+      setSelectedPhotoIndex(selectedPhotoIndex - 1);
     } else if (event.key === "Escape") {
       closeModal();
     }
@@ -60,19 +52,19 @@ const Searchitem = ({ item }) => {
     } else {
       window.removeEventListener("keydown", handleKeyDown);
     }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isModalOpen, selectedPhotoIndex]);
 
   return (
     <div className="searchItem">
-      {item.photos.map((photo, index) => (
-        <img
-          key={index}
-          src={photo}
-          alt={`Image ${index}`}
-          className="sImg"
-          onClick={() => openModal(photo, index)}
-        />
-      ))}
+      <img
+        src={item.photos[0]}
+        alt={`Image 0`}
+        className="sImg"
+        onClick={openModal}
+      />
       <div className="sDetails">
         <ul className="detailsList">
           <li className="sDesc">Name: {item.name}</li>
@@ -84,7 +76,7 @@ const Searchitem = ({ item }) => {
         </ul>
       </div>
       <Link
-        to={`/bus/${item._id}?date=${parseDate(
+        to={`/bus/${item._id}?date=${moment(
           item.departureDate
         ).toISOString()}&busId=${item._id}`}
       >
@@ -93,7 +85,7 @@ const Searchitem = ({ item }) => {
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={handleModalClose}>
+            <span className="close" onClick={closeModal}>
               &times;
             </span>
             <img

@@ -46,31 +46,24 @@
   max-width: 1024px;
 }
 
-/* Updated styles for FontAwesome icons */
-.headerIcon {
-  color: lightgray;
-}
-
-/* Updated styles for search item container */
 .headerSearchItem {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Updated styles for search input field */
+
 .headerSearchInput {
   border: none;
   outline: none;
+
 }
 
-/* Updated styles for search text */
 .headerSearchText {
   color: lightgray;
   cursor: pointer;
 }
 
-/* Updated position of the date picker */
 .date {
   position: absolute;
   top: 51px;
@@ -89,3 +82,77 @@
   margin-inline-end: 0px;
   font-weight: bold;
 }
+.headerbtn
+{
+  height: 45px;
+  width: 100px;
+  border-radius: 30px;
+  color: #ffffff;
+  background-color: #36a5af;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

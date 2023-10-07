@@ -2,24 +2,17 @@ import User from "../models/usermodel.js";
 import bcrypt from "bcryptjs";
 import { createError } from "../utils/error.js";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
+import usermodel from "../models/usermodel.js";
 
 // register
 export const register = async (req, res, next) => {
   try {
-    const existingUser = await User.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }],
-    });
-
+    const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
-      const errors = [];
-      if (existingUser.username === req.body.username) {
-        errors.push("Username is not unique.");
-      }
-      if (existingUser.email === req.body.email) {
-        errors.push("Email is not unique.");
-      }
-      return res.status(400).json({ error: errors.join(" ") });
+      return res.status(400).send("Email is already in use.");
     }
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
     const newUser = new User({
@@ -28,17 +21,25 @@ export const register = async (req, res, next) => {
     });
 
     await newUser.save();
+    await sendConfirmationEmail(newUser.username, newUser.email, newUser._id);
     res.status(200).send("User has been created.");
   } catch (err) {
     next(err);
   }
 };
 
-// login
+// // login
+
 export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return next(createError(404, "User not found"));
+
+    // Check if the user is verified
+    if (user.isVerified !== "1") {
+      return res.status(401).json({ message: "Email not verified" });
+    }
+
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
       user.password
@@ -60,5 +61,54 @@ export const login = async (req, res, next) => {
       .json({ details: { ...otherDetails }, isAdmin });
   } catch (err) {
     next(err);
+  }
+};
+
+export const sendConfirmationEmail = async (username, email, _id) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      requireTLS: true,
+      auth: {
+        user: "ghimireaneel50@gmail.com",
+        pass: "rjdc uqxu ycxg swrg",
+      },
+    });
+    const mailoptions = {
+      from: "ghimireaneel50@gmail.com",
+      to: email,
+      subject: "For mail verification",
+      html: `
+        <p>Hello ${username}, 
+        please click here to <a href="http://localhost:3000/verify/${_id}">Verify</a> your mail</p>
+      `,
+    };
+
+    transporter.sendMail(mailoptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Your mail has been sent:-", info.response);
+      }
+    });
+  } catch (error) {
+    console.error("Error sending confirmation email:", error);
+  }
+};
+
+export const verifymail = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { isVerified: "1" } },
+      { new: true }
+    );
+    console.log(user);
+    res.status(200).json({ message: "Email verified successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

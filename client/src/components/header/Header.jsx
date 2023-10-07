@@ -34,7 +34,7 @@ const Header = ({ type }) => {
     };
     getStartAndDestinations();
   }, []);
- 
+
   React.useEffect(() => {
     const fetchBus = async () => {
       const buses = await axios.get(
@@ -50,10 +50,10 @@ const Header = ({ type }) => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (sourceCity && destinationCity) {
-      navigate("/bus", { state: { sourceCity, destinationCity, date } });
+    if (!sourceCity || !destinationCity) {
+      alert("Please select both source and destination cities.");
     } else {
-      alert("Please enter both source and destination cities.");
+      navigate("/bus", { state: { sourceCity, destinationCity, date } });
     }
   };
 
@@ -70,12 +70,12 @@ const Header = ({ type }) => {
       <div className="headerList">
         {type !== "list" && (
           <div>
-             <div className="write">
-            <h1>Book your journey now with the bus platform Hamro Bus</h1>
+            <div className="write">
+              <h1>Book your journey now with the bus platform Hamro Bus</h1>
             </div>
-            <div className="headerListItem">
+            {/* <div className="headerListItem">
               <FontAwesomeIcon icon={faBus} />
-            </div>
+            </div> */}
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon

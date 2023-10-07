@@ -14,21 +14,46 @@ const Register = () => {
     email: "",
     password: "",
     phone: "",
+    img: "",
   });
-  const [registrationStatus, setRegistrationStatus] = useState(null); // Track registration status
-  const [selectedFile, setSelectedFile] = useState(null); // Track selected profile picture
+  const [registrationStatus, setRegistrationStatus] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const { loading, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
   };
+
   const handleUploadClick = () => {
     document.getElementById("photo").click();
+  };
+
+  const uploadImageToCloudinary = async () => {
+    if (!selectedFile) {
+      return "";
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("upload_preset", "project");
+
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dnuomhfwl/image/upload",
+        formData
+      );
+
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      return "";
+    }
   };
 
   const handleClick = async (e) => {
@@ -50,16 +75,13 @@ const Register = () => {
     }
 
     try {
+      const imageUrl = await uploadImageToCloudinary();
+      credentials.img = imageUrl;
+
       const res = await axios.post("/auth/register", credentials);
 
       if (res.data.error) {
-        if (res.data.error.includes("Username is not unique.")) {
-          Swal.fire({
-            icon: "error",
-            title: "Username Not Unique",
-            text: "Username is not unique.",
-          });
-        } else if (res.data.error.includes("Email is not unique.")) {
+        if (res.data.error.includes("Email is not unique.")) {
           Swal.fire({
             icon: "error",
             title: "Email Not Unique",
@@ -110,13 +132,9 @@ const Register = () => {
       <NavBar />
       <div className="register">
         <div className="rContainer">
-        <h2 className="logins">Register</h2>
-        <div className="profile-picture-container">
-            {/* Circular profile picture button with camera icon */}
-            <div
-              className="profile-picture"
-              onClick={handleUploadClick}
-            >
+          <h2 className="logins">Register</h2>
+          <div className="profile-picture-container">
+            <div className="profile-picture" onClick={handleUploadClick}>
               {selectedFile ? (
                 <img
                   src={URL.createObjectURL(selectedFile)}
@@ -127,10 +145,10 @@ const Register = () => {
                 <i className="fas fa-camera"></i>
               )}
             </div>
-            {/* Hidden file input */}
+
             <input
               type="file"
-              accept="image/*" // Accept only image files
+              accept="image/*"
               id="photo"
               onChange={handleFileChange}
               className="profile-picture-input"

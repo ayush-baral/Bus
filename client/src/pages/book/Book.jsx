@@ -26,7 +26,7 @@ const Book = () => {
   console.log(busDetails);
   let config = {
     // replace this key with yours
-    publicKey: "test_public_key_6d9531be1c0e48bca2afc46e4918b2d2",
+    publicKey: "test_public_key_ee71705cad0e48279ef9a71a6ef42b75",
     productIdentity: busDetails._id,
     productName: busDetails?.selectedSeats?.toString(),
     productUrl: "http://google.com",
@@ -59,6 +59,7 @@ const Book = () => {
                 name: busDetails?.name,
                 startCity: busDetails?.startCity,
                 destinationCity: busDetails?.destinationCity,
+                busNumber: busDetails?.busNumber,
               }
             );
             console.log(response.data);
@@ -139,19 +140,6 @@ const Book = () => {
         bookBus();
       }
     });
-    // const response = await axios.post("http://localhost:8800/api/book", {
-    //   userId: user._id,
-    //   busId: busDetails._id,
-    //   boardingPoint: bookingDetails.boardingPoint,
-    //   nameOfPassenger: bookingDetails.name,
-    //   email: bookingDetails.email,
-    //   phonenumber: bookingDetails.phone,
-    //   seats: busDetails?.selectedSeats,
-    //   price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
-    //   date: busDetails?.departureDate,
-    //   time: busDetails?.time,
-    //   name:busDetails?.name,
-    // });
   };
 
   const bookBus = async () => {
@@ -160,41 +148,6 @@ const Book = () => {
       amount:
         busDetails?.selectedSeats?.length * busDetails?.pricePerSeat * 100,
     });
-    // try {
-    //   const response = await axios.post("http://localhost:8800/api/book", {
-    //     userId: user._id,
-    //     busId: busDetails._id,
-    //     boardingPoint: bookingDetails.boardingPoint,
-    //     nameOfPassenger: bookingDetails.name,
-    //     email: bookingDetails.email,
-    //     phonenumber: bookingDetails.phone,
-    //     seats: busDetails?.selectedSeats,
-    //     price: busDetails?.selectedSeats?.length * busDetails?.pricePerSeat,
-    //     date: busDetails?.departureDate,
-    //     time: busDetails?.time,
-    //     name: busDetails?.name,
-    //     destinationCity: busDetails?.destinationCity,
-    //     startCity: busDetails?.startCity,
-    //   });
-
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: "Booking Successful!",
-    //     text: "Your booking has been successfully completed.",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       navigate("/");
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.error("Booking failed:", error);
-
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Booking Failed",
-    //     text: "Booking failed. Please try again later.",
-    //   });
-    // }
   };
 
   return (
@@ -242,7 +195,7 @@ const Book = () => {
               />
             </div>
             <div className="PassengerItems">
-              <label>Boarding Point</label>
+              <label>Boarding Point : </label>
               {busDetails?.boardingPoints &&
               busDetails.boardingPoints.length === 1 ? (
                 <div>{busDetails.boardingPoints[0]}</div>

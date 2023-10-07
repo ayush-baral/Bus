@@ -16,7 +16,7 @@ router.post("/khalti", async (req, res) => {
     },
     {
       headers: {
-        Authorization: `Key test_secret_key_178a4691eca34077a0d47daf52ed0701`,
+        Authorization: `Key test_secret_key_3722fd6257b84dab8251b1af3dbecd37`,
       },
     }
   );

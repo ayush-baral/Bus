@@ -80,7 +80,7 @@ const Login = (props) => {
       <NavBar />
       <div className="login">
         <div className="lContainer">
-        <h2 className="logins">LOGIN</h2>
+          <h2 className="logins">LOGIN</h2>
           <input
             type="text"
             placeholder="email"

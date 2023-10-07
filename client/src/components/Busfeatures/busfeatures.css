@@ -15,13 +15,13 @@
 
 .bListImg {
   width: 100%;
-  height: 150px;
-  object-fit: cover;
+  height: 80%;
+  border-radius: 10px;
 }
 
 .bListTitles > h1 {
   font-size: 18px;
-  color: #444;
+  color: rgb(7, 6, 6);
 }
 
 .bListTitles > h2 {

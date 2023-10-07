@@ -64,7 +64,7 @@ export const busColumns = [
   {
     field: "busNumber",
     headerName: "BusNumber",
-    width: 230,
+    width: 150,
   },
   {
     field: "startCity",
@@ -74,38 +74,38 @@ export const busColumns = [
   {
     field: "destinationCity",
     headerName: " Destination City",
-    width: 100,
+    width: 150,
   },
   {
     field: "totalSeats",
     headerName: "Total Seats",
-    width: 100,
+    width: 90,
   },
   {
     field: "availableSeats",
     headerName: "Available Seats",
-    width: 100,
+    width: 130,
   },
   {
     field: "pricePerSeat",
     headerName: "Price",
-    width: 100,
+    width: 50,
   },
   {
     field: "phonenum",
-    headerName: "Phone",
-    width: 100,
+    headerName: "Phone Number",
+    width: 150,
   },
 
   {
     field: "features",
     headerName: "Features",
-    width: 100,
+    width: 150,
   },
   {
     field: "boardingPoints",
     headerName: "Boarding Points",
-    width: 100,
+    width: 150,
   },
   {
     field: "time",
